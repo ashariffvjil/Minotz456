@@ -2,24 +2,7 @@
 class user extends CI_Model
 	{
 	
-	 function login($username, $password)
-	 {
-	   $this -> db -> select('users_id, users_name, password');
-	   $this -> db -> from('users');	   $this -> db -> where('users_name', $username);
-	   $this -> db -> where('password', MD5($password));
-	   $this -> db -> limit(1);
 	 
-	   $query = $this -> db -> get();
-	 
-	   if($query -> num_rows() == 1)
-	   {
-	     return $query->result();
-	   }
-	   else
-	   {
-	     return false;
-	   }
-	 }
 	 
 	 function password_encrypt($password)
 	 {
@@ -29,27 +12,63 @@ class user extends CI_Model
 	 return $pwd.':'.$salt;
 	 }
 	 
+	  function password_decrypt($password,$salt)
+	 {
+	 $str=$password.$salt;
+	 $pwd=do_hash($str, 'md5');
+	 return $pwd.':'.$salt;
+	 }
 	 
+	 
+	 function checkLogin($username, $password)
+	 {
+	  
+	   $queryUsername =  $this->db->query("call getUserdetailsByUsername('".$username."')");
+	 	
+	  
+	  if($queryUsername->num_rows() <=0)
+	   {
+	       return json_encode(array('st'=>0, 'msg' => 'Invalid User Name & Password'));
+	   }
+	   
+	  $result=$queryUsername->row_array();
+	  $this->db->reconnect();
+	  
+	  $salt=explode(':',$result['password']);
+	  $new_password=$this->password_decrypt($password,$salt[1]);  
+	
+	
+	   if($result['password']!=$new_password)
+	   {
+	       return json_encode(array('st'=>0, 'msg' => 'Invalid User Name & Password'));
+	    
+	   }
+	   		$result['st']=1;
+	     return $result;
+	   
+	 }
 	 function signup($username,$email,$password)
 	 {
 	   $password=$this->password_encrypt($password);
 	   
+	    $queryUsername =  $this->db->query("call getUserdetailsByUsername('".$username."')");
+	 	 $this->db->reconnect();
+	   if($queryUsername->num_rows() == 1)
+	   {
+	    $result= array('st'=>0, 'msg' =>'Username Already Exists');
+		 return $result;
+	   }
+	 
 	   $queryEmail =  $this->db->query("call getUserdetailsByEmail('".$email."')");
-	   
-	   $queryUsername =  $this->db->query("call getUserdetailsByUsername('".$username."')");
+	   $this->db->reconnect();
 	    
 		if($queryEmail->num_rows() == 1)
 	   {
 	   $result= array('st'=>0, 'msg' =>'Email Already Exists');
 	   return $result;
 	   }
-	   else if($queryUsername->num_rows() == 1)
-	   {
-	    $result= array('st'=>0, 'msg' =>'Username Already Exists');
-		 return $result;
-	   }
-	  else 
-	  {
+	   
+	  
 	   $query =  $this->db->query("call saveUser('".$username."','".$email."','".$password."')");
 	 	
 		   if($query->num_rows() == 1)
@@ -58,7 +77,7 @@ class user extends CI_Model
 			 $this->session->set_userdata($query->result_array());
 			  return array('st'=>1, 'msg' =>'Submit Sucessfully');
 		   }
-	   }
+	
 	  
 	 }
 	 

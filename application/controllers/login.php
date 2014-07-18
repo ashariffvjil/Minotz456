@@ -41,6 +41,16 @@ class Login extends CI_Controller {
 		}
 		else 
 		{
+			$username = $this->input->post('username');
+			$password = $this->input->post('password');
+			
+						
+			$result=$this->user->checkLogin($username,$password);
+			if($result) 
+			{
+			if($result['st']==1) $this->session->set_userdata('user',$result);
+			echo json_encode($result);
+			}
 		}
   
  }
