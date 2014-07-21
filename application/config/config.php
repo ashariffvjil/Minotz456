@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://172.27.2.107/Minotz/';
+$config['base_url']	= 'http://localhost/Minotz456/';
 
 /*
 |--------------------------------------------------------------------------

@@ -1,12 +1,3 @@
-<?php 
-echo "<pre>";
-print_r($_POST);
-
-//echo base_url();
-echo "</pre>";
-
-
-?>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="<?php echo base_url() ?>js/jquery-ui.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/textbox.js"></script>
@@ -31,21 +22,29 @@ echo "</pre>";
 		$(".panel-body1").css('background-color','#'+hexclr);
 	}
 	*/
+	
 	function getvalues(divid)
 	{
 		var ele = document.getElementById(divid).children;
 		var match = new Array();
-		var i = fillArray(ele,match);
-		alert(i);
-		document.getElementById('val').innerHTML = match;
+		var total_elements = fillArray(ele,match);
+		document.getElementById('val').innerHTML = total_elements;
+		document.getElementById('id_txtvalues').value = total_elements;
+		
 	}
 	function fillArray(e1,a1)
 	{
 		for(var i =0;i<e1.length;i++)
 		{
-			//alert(e1[i].id);
-			if(e1[i].id.indexOf('frmdiv') == 0)
-			a1.push(e1[i]);
+			if(e1[i].id.indexOf('frmdiv') != 0)
+			a1.push(e1[i].id);
+			var prop=new Array();
+			leftposition = parseInt($('#'+e1[i].id).offset().left) -parseInt($('#frmdiv').offset().left);
+			topposition =parseInt($('#'+e1[i].id).offset().top) - parseInt($('#frmdiv').offset().top);
+			element_width=document.getElementById(e1[i].id).offsetWidth;
+			element_height=document.getElementById(e1[i].id).offsetHeight;
+			var tmp=e1[i].name+'@'+leftposition+'@'+topposition+'@'+element_width+'@'+element_height;
+			a1.push(tmp);
 		}
 		return a1;
    }
@@ -59,16 +58,12 @@ echo "</pre>";
 
 
 $(function () {
-	
-
     $(".panel-tool li").draggable({
         appendTo: "body",
         helper: "clone"
-		
     });
-	var i=0;var j=0;k=0;l=0;m=0;n=0;p=0;q=0;
+	var i=0;var j=0;k=0;l=0;m=0;n=0;p=0;q=0;r=0;s=0;t=0;
 	var dropPositionY=0;var dropPositionX=0;
-	
     $(".panel-body1").droppable({
         activeClass: "ui-state-default",
         hoverClass: "ui-state-hover",
@@ -91,9 +86,8 @@ $(function () {
 				$('#id_tposition').val(parseFloat(dropPositionY));
 				 dropPositionX =0;
 				 dropPositionY =0; */
-				var phval=$ctrl.attr('placeholder');  
-				$('#id_placeholder').val(phval);
-				
+				var placeholder_val=$ctrl.attr('placeholder');  
+				$('#id_placeholder').val(placeholder_val);
 				$("#id_textbox_"+i).draggable({ containment: ".panel-body1",
 				     drag: function(){
 						gettextbox_properties(this,'text');
@@ -107,7 +101,6 @@ $(function () {
 				// $(this).append ( "<span id='id_chk_" + j +"'><label for='id_chk_" + j + "'>" + val + "</label>&nbsp<input id='id_chk_" + j + "' type='checkbox' value='" + val + "' /></span>" );
 				//var $ctrl_lbl=$('<label />', { 'for': 'id_chk_'+j, text: 'checkbox' }).appendTo("panel-body1");
 				$(this).append($ctrl);
-				var id='id_chk_'+j;
 				$("#id_chk_"+j).draggable({ containment: ".panel-body1",
 				     drag: function(){
 						gettextbox_properties(this,'checkbox');
@@ -118,7 +111,6 @@ $(function () {
 			else if(ui.draggable.text()=='Radio button'){
 				var $ctrl = $('<input/>').attr({ type: 'radio',id:'id_rdo_'+k, name:'radio'}).addClass("rad");
 				$(this).append($ctrl);
-				var id='id_rdo_'+k;
 				$("#id_rdo_"+k).draggable({ containment: ".panel-body1",
 				     drag: function(){
 						gettextbox_properties(this,'radio');
@@ -130,7 +122,6 @@ $(function () {
 				var $ctrl = $('<select/>').attr({id:'id_dropdown_'+l , name:'dropdown'}).addClass("select");
 				var $ctrloptn=$('<option />', {value: '', text: 'Select'}).appendTo($ctrl);
 				$(this).append($ctrl);
-				var id='id_dropdown_'+l;
 				$("#id_dropdown_"+l).draggable({ containment: ".panel-body1",
 				     drag: function(){
 						gettextbox_properties(this,'dropdown');
@@ -140,12 +131,11 @@ $(function () {
 			}
 			else if(ui.draggable.text()=='Header'){
 				var lbl = prompt ("Enter Text","");
-				var $ctrl=$('<label/>').attr({id:'id_lbl_'+m , name:'label'}).append(lbl);
+				var $ctrl=$('<label/>').attr({id:'id_header_'+m , name:'header'}).append(lbl);
 				$(this).append($ctrl);
-				var id='id_lbl_'+m;
-				$("#id_lbl_"+m).draggable({ containment: ".panel-body1",
+				$("#id_header_"+m).draggable({ containment: ".panel-body1",
 				     drag: function(){
-						gettextbox_properties(this,'Label');
+						gettextbox_properties(this,'header');
 					},
 				 scroll: false, cancel: null  });
 				m++;
@@ -153,7 +143,6 @@ $(function () {
 			else if(ui.draggable.text()=='Button'){
 				var $ctrl = $('<input/>').attr({ type: 'button',id:'id_button_'+n, name:'button',value:'Button'}).addClass("button");
 				$(this).append($ctrl);
-				var id='id_button_'+n;
 				$("#id_button_"+n).draggable({ containment: ".panel-body1",
 				     drag: function(){
 						gettextbox_properties(this,'button');
@@ -163,9 +152,8 @@ $(function () {
 			}
 			else if(ui.draggable.text()=='Subheader'){
 				var lbl = prompt ("Enter Text","");
-				var $ctrl=$('<label/>').attr({id:'id_subhead_'+p}).append(lbl);
+				var $ctrl=$('<label/>').attr({id:'id_subhead_'+p,name:'Subheader'}).append(lbl);
 				$(this).append($ctrl);
-				var id='id_subhead_'+p;
 				$("#id_subhead_"+p).draggable({ containment: ".panel-body1",
 				     drag: function(){
 						gettextbox_properties(this,'subheader');
@@ -174,12 +162,9 @@ $(function () {
 				p++;
 			}
 			else if(ui.draggable.text()=='Label'){
-				var val='Label';
 				var lbl = prompt ("Enter Text","");
-				var $ctrl=$('<label/>').attr({id:'id_label_'+q}).append("<b>"+lbl+"</b>");
-				 //$(this).append ( "<label id='id_label_"+q+"' >" + val + "</label>" );
+				var $ctrl=$('<label/>').attr({id:'id_label_'+q,name:'Label'}).append("<b>"+lbl+"</b>");
 				$(this).append($ctrl);
-				var id='id_label_'+q;
 				$("#id_label_"+q).draggable({ containment: ".panel-body1",
 				     drag: function(){
 						gettextbox_properties(this,'label');
@@ -187,32 +172,53 @@ $(function () {
 				 scroll: false, cancel: null  });
 				q++;
 			}
-			else if(ui.draggable.text()=='Image'){
-				var $ctrl=$('<img />').attr({ 'id': 'Myid', 'src': 'C:\Users\Public\Pictures\Sample Pictures/Penguins.jpg', 'alt':'MyAlt','width':300,'height':300}).addClass("image");
+			else if(ui.draggable.text()=='Page break'){
+				var $ctrl=$('<hr/>').attr({id:'id_pagebrk_'+r,name:'page break'}).addClass("page_break");
 				$(this).append($ctrl);
-				$( ".image" ).draggable({ containment: ".panel-body1", scroll: false, cancel: null });
-
+				$(".page_break").css('background-color','blue');
+				$(".page_break").height(2);
+				$("#id_pagebrk_"+r).draggable({ containment: ".panel-body1",
+				     drag: function(){
+						gettextbox_properties(this,'Pagebreak');
+					},
+				 scroll: false, cancel: null  });
+				 r++;
 			}
-			
+			else if(ui.draggable.text()=='Line'){
+			var $ctrl=$('<hr />').attr({id:'id_hr_'+s, name:'line'}).addClass("line");
+				$(this).append($ctrl);
+				$(".line").css('background-color','red');
+				$(".line").width(200).height(2);
+				$("#id_hr_"+s).draggable({ containment: ".panel-body1",
+				     drag: function(){
+						gettextbox_properties(this,'line');
+					},
+				 scroll: false, cancel: null  });
+				 s++;
+			}
+			else if(ui.draggable.text()=='Sketch'){
+				var $ctrl=$('<div ></div>').attr({ 'id': 'id_sketch_'+t, name:'sketh'}).addClass("sketch");
+				$(this).append($ctrl);
+				$(".sketch").width(200).height(70);
+				$(".sketch").css('background-color','grey');
+				$("#id_sketch_"+t).draggable({ containment: ".panel-body1",
+				     drag: function(){
+						gettextbox_properties(this,'sketh');
+					},
+				 scroll: false, cancel: null  });
+				t++;
+			}
         }
-    }).sortable({
-        items: "li:not(.placeholder)",
-        sort: function () {
-            // gets added unintentionally by droppable interacting with sortable
-            // using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
-            $(this).removeClass("ui-state-default");
-        }
-    });
+    }).sortable();
 });
 </script>
-
-
 
 <div id="container">
 	<h1>Configurator</h1>
 
 	<div id="body">
 		<div class="row">
+		<!---------- Start the Tools panel-------------->
 			<div class="col-lg-2">
 				<div class="panel panel-success">
 					<div class="panel-heading"> Tools </div>
@@ -225,20 +231,23 @@ $(function () {
 							<li>Radio button</li>
 							<li>Dropdown list</li>
 							<li>Label</li>
+							<li>Page break</li>
+							<li>Line</li>
+							<li>Sketch</li>
 						</ul>
 					</div>
 					
 				</div>
 			</div>
+			<!----------  Create the form-------------->
 			<div class="col-lg-7">
 				<div class="panel panel-primary" >
 					<div class="panel-heading"> Form </div>
 					<div class="panel-body1" id="frmdiv">
-					
 					</div>
-					
 				</div>
 			</div>
+			<!---------- Start the Properties panel-------------->
 			<div class="col-lg-3">
 				<div class="panel panel-info">
 					<div class="panel-heading"> Properties  <input type="button" name="btn_del" id="id_del" value="Delete" onclick="cntrl_deleted('id_cid')"></div>
@@ -280,12 +289,9 @@ $(function () {
 						<tr>
 							<td>Form color</td>
 							<td><span id="Expandable"></span></td>
-    
 						</tr>
-					
 					</table>
 					</div>
-					
 				</div>
 			</div>
 			<center>
