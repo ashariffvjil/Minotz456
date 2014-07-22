@@ -17,14 +17,14 @@
                       <?php print_r($_SESSION); echo form_open('login/check', array('id'=>'frm')); ?>
                             <fieldset>
                                 <div class="form-group">
-                                 <input class="form-control" placeholder="User name" name="username" type="text" autofocus="">
+                                 <input class="form-control" placeholder="User name" name="username" type="text" value="<?php if(isset($_COOKIE['username'])) echo $_COOKIE['username']; ?>" autofocus="on" autocomplete="off" autocapitalize="off" autocorrect="off">
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Password" name="password" type="password" value="">
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                        <input name="remember" type="checkbox" value="Remember Me" <?php if(isset($_COOKIE['remember'])) echo "checked"; ?> >Remember Me
                                     </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
