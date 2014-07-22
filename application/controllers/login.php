@@ -1,5 +1,4 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
 class Login extends CI_Controller {
 
 	/**
@@ -19,13 +18,18 @@ class Login extends CI_Controller {
 	 */
 	public function index()
 	{
-	
-	 $this->load->view('login');
+	$user=$this->session->userdata('user');
+	if(!empty($user)) redirect('home');
+	 $this->load->view('login',array('header'=>false));
    }
    public function signup()
 	{
-	
-	 $this->load->view('signup');
+	 $this->load->view('signup',array('header'=>false));
+   }
+    public function logout()
+	{
+	$this->session->unset_userdata('user');
+	redirect('login');
    }
    public  function check()
  {
@@ -43,12 +47,32 @@ class Login extends CI_Controller {
 		{
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
+			$remember = $this->input->post('remember');
 			
 						
 			$result=$this->user->checkLogin($username,$password);
 			if($result) 
 			{
-			if($result['st']==1) $this->session->set_userdata('user',$result);
+			if($result['st']==1) {
+			if($remember) {
+            $month = time() + (60 * 60 * 24 * 30);
+            $this->input->set_cookie('remember', $username, $month);
+            $this->input->set_cookie('username', $username, $month);
+            $this->input->set_cookie('password', $result['password'], $month);
+        } elseif (!$remember) {
+            $past = time() - 100;
+            $past = time() - 100;
+            if (isset($_COOKIE['remember'])) {
+                 $this->input->set_cookie('remember', '', $past);
+            } elseif (isset($_COOKIE['username'])) {
+                 $this->input->set_cookie('username', '', $past);
+            } elseif (isset($_COOKIE['password'])) {
+                 $this->input->set_cookie('password', '', $past);
+            }
+        		}
+			 $this->session->set_userdata('user',$result); 
+			} 
+			
 			echo json_encode($result);
 			}
 		}

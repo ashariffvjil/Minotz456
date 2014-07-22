@@ -26,7 +26,7 @@ $config['base_url']	= 'http://172.27.2.107/Minotz/';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------

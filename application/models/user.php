@@ -28,7 +28,7 @@ class user extends CI_Model
 	  
 	  if($queryUsername->num_rows() <=0)
 	   {
-	       return json_encode(array('st'=>0, 'msg' => 'Invalid User Name & Password'));
+	       return array('st'=>0, 'msg' => 'Invalid User Name & Password');
 	   }
 	   
 	  $result=$queryUsername->row_array();
@@ -40,7 +40,7 @@ class user extends CI_Model
 	
 	   if($result['password']!=$new_password)
 	   {
-	       return json_encode(array('st'=>0, 'msg' => 'Invalid User Name & Password'));
+	       return array('st'=>0, 'msg' => 'Invalid User Name & Password');
 	    
 	   }
 	   		$result['st']=1;

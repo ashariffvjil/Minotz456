@@ -96,7 +96,7 @@ class MY_Loader extends CI_Loader {
 	 * 
 	 * @see /system/libraries/CI_Loader#view($view, $vars, $return)
 	 */
-	function view($view, $vars = array('header'=>false), $return = FALSE){		
+	function view($view, $vars = array('header'=>true), $return = FALSE){		
 		// this part loads a view
 		$data['header'] ='';
 		
@@ -130,7 +130,7 @@ class MY_Loader extends CI_Loader {
 			
 			if($vars['header'])
 			$data['header'] = $this->_ci_load(array(
-				'_ci_view' => $this->template.'/header.php', 
+				'_ci_view' => $this->template.'/includes/header.php', 
 				'_ci_vars' => $this->_ci_object_to_array($vars),
 				'_ci_return' => TRUE)
 			);

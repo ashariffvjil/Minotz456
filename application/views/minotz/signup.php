@@ -14,8 +14,7 @@
                     
 					        <fieldset>
                                 <div class="form-group">
-                                  <?php echo form_error('username', '<div class="error">', '</div>'); ?>
-								 <input class="form-control" placeholder="User Name" value="<?php echo set_value('username'); ?>" name="username" type="text" autofocus="">
+                                  <input class="form-control" placeholder="User Name" value="<?php echo set_value('username'); ?>" name="username" type="text" autofocus="">
                                 </div>
 								  <div class="form-group">
                                  <input class="form-control" placeholder="Email Address" value="<?php echo set_value('email'); ?>" name="email" type="text" autofocus="">
@@ -36,7 +35,7 @@
             </div>
         </div>
 		<script type="text/javascript">
-/*		$(document).ready(function() {
+		$(document).ready(function() {
 $('#frm').submit(function(){
 	
 	$.post($('#frm').attr('action'), $('#frm').serialize(), function( data ) {
@@ -55,5 +54,5 @@ $('#frm').submit(function(){
    });
 
 	
-});*/
+});
 </script>
