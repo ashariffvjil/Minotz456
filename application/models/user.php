@@ -61,6 +61,18 @@ class user extends CI_Model
 	   }
 	  
 	 }
-	 
+	 function savemodule($module_name,$modules_description)
+	{
+		$query =  $this->db->query("call saveModules('".$module_name."','3','".$modules_description."')");
+		//if($query->num_rows() == 1)
+		if($query)
+		{
+		  return array('st'=>1, 'msg' =>'Submit Sucessfully');
+		}
+		//else{
+		//return array('st'=>2,'msg'=>'else');
+		//}
 	}
+	 
+}
 	?>

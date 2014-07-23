@@ -20,46 +20,41 @@ class Module extends CI_Controller {
 	public function index()
 	{
 		$this->load->view('module');
-		
 	}
 	public function configurator()
+{
+	$this->load->view('configurator');
+	}
+	public function check_configurator()
 	{
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('module_name', 'Module name', 'required');
+		$this->form_validation->set_rules('modules_name', 'Module Name', 'required');
 		if ($this->form_validation->run() == FALSE)
 		{
 			echo json_encode(array('st'=>0, 'msg' => validation_errors()));
 		}
 		else 
 		{
-			$module_name = $this->input->post('module_name');
-			
-			$this->load->view('configurator');
-			
+			$module_name = $this->input->post('modules_name');
+			echo json_encode(array('st'=>1,'modules_name'=>$module_name));
 		}
-		
 	}
 	public function save_module()
 	{
-		$this->load->library('form_validation');
-		$this->form_validation->set_rules('txt_description', 'Module description', 'required');		
-		
-		
+		$this->form_validation->set_rules('txt_description', 'Module', 'required');		
 		if ($this->form_validation->run() == FALSE)
 		{
-						 
 			echo json_encode(array('st'=>0, 'msg' => validation_errors()));
 		}
 		else 
 		{
 			$module_name = $this->input->post('hid_modulename');
 			$modules_description = $this->input->post('txt_description');
-			
-			$result=$this->module->savemodule($module_name,$modules_description);
+			$result=$this->user->savemodule($module_name,$modules_description);
 			if($result) 
 			{
-			echo json_encode($result);
-					}
+				echo json_encode($result);
+			}
 
 		}
 	

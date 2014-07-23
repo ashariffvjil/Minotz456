@@ -37,8 +37,10 @@
 		var ele = document.getElementById(divid).children;
 		var arr_elements = new Array();
 		var total_elements = fillArray(ele,arr_elements);
-		document.getElementById('val').innerHTML = total_elements;
-		document.getElementById('id_description').value = total_elements;
+		if(total_elements!='[]'){
+			document.getElementById('id_description').value = total_elements;
+			document.getElementById('val').innerHTML = total_elements;
+			}
 	}
 	//STORING ALL CONTROLS/ELEMENTS ATTRIBUTES IN A JSON
 	function fillArray(e1,a1)
@@ -241,15 +243,17 @@ $("#properties").css('display',"none");
     }).sortable();
 });
 </script>
-<?php $module_name=$_REQUEST['module_name'];
+<?php 
+//print_r($_GET['data']);
+$module_name=$_REQUEST['data'];
  ?>
-
 <div id="container">
 	<h1>Configurator</h1>
 
 	<div id="body">
-	 <?php echo form_open('module/save_module', array('id'=>'frm')); ?>
+	 <?php echo form_open('module/save_module', array('id'=>'frm','name'=>'frm')); ?>
 		<div class="row">
+		<div id="validation-error" ></div>
 		<!---------- Start the Tools panel-------------->
 			<div class="col-lg-2">
 				<div class="panel panel-success">
@@ -342,3 +346,21 @@ $("#properties").css('display',"none");
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#frm').submit(function(){
+	//alert('ssssssssss');
+		$.post($('#frm').attr('action'), $('#frm').serialize(), function( data ) {
+			if(data.st == 0)
+			{
+				$('#validation-error').html(data.msg).addClass('alert alert-danger');
+			}
+				if(data.st == 1)
+			{
+				window.location.href='home.html';
+			}
+		}, 'json');
+		return false;			
+	});
+}); 
+</script>
