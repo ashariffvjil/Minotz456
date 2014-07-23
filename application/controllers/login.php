@@ -99,12 +99,7 @@ class Login extends CI_Controller {
      return false;
    }
  }
- function configurator()
- {
  
-	$this->load->view('configurator');
- 
- }
 }
 
 /* End of file welcome.php */
