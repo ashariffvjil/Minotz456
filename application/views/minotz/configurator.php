@@ -248,7 +248,7 @@ $("#properties").css('display',"none");
 	<h1>Configurator</h1>
 
 	<div id="body">
-	 <?php //echo form_open('module/save_module', array('id'=>'frm')); ?>
+	 <?php echo form_open('module/save_module', array('id'=>'frm')); ?>
 		<div class="row">
 		<!---------- Start the Tools panel-------------->
 			<div class="col-lg-2">
@@ -274,7 +274,7 @@ $("#properties").css('display',"none");
 			<!----------  Create the form-------------->
 			<div class="col-lg-7">
 				<div class="panel panel-primary" >
-					<div class="panel-heading"> <?php echo strtoupper($module_name) ?> </div>
+					<div class="panel-heading"> <?php echo strtoupper($module_name) ?><input type='hidden' name='hid_modulename' value=<?php echo strtoupper($module_name) ?>> </div>
 					<div class="panel-body1" id="frmdiv">
 					</div>
 				</div>

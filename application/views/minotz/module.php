@@ -23,7 +23,7 @@
 	</div>
 </div>
 <script type="text/javascript">
-$(document).ready(function() {
+/*$(document).ready(function() {
 	$('#frm').submit(function(){
 		$.post($('#frm').attr('action'), $('#frm').serialize(), function( data ) {
 			if(data.st == 0)
@@ -33,6 +33,6 @@ $(document).ready(function() {
 		}, 'json');
 		return false;			
 	});
-});
+}); */
 </script>
 	

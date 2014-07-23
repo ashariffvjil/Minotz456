@@ -32,15 +32,36 @@ class Module extends CI_Controller {
 		}
 		else 
 		{
-			echo '----------------------------';
 			$module_name = $this->input->post('module_name');
-			//$this->load->view('configurator');
+			
+			$this->load->view('configurator');
+			
 		}
 		
 	}
 	public function save_module()
 	{
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('txt_description', 'Module description', 'required');		
 		
+		
+		if ($this->form_validation->run() == FALSE)
+		{
+						 
+			echo json_encode(array('st'=>0, 'msg' => validation_errors()));
+		}
+		else 
+		{
+			$module_name = $this->input->post('hid_modulename');
+			$modules_description = $this->input->post('txt_description');
+			
+			$result=$this->module->savemodule($module_name,$modules_description);
+			if($result) 
+			{
+			echo json_encode($result);
+					}
+
+		}
 	
 	
 	
