@@ -38,7 +38,7 @@
 		var arr_elements = new Array();
 		var total_elements = fillArray(ele,arr_elements);
 		document.getElementById('val').innerHTML = total_elements;
-		document.getElementById('id_txtvalues').value = total_elements;
+		document.getElementById('id_description').value = total_elements;
 	}
 	//STORING ALL CONTROLS/ELEMENTS ATTRIBUTES IN A JSON
 	function fillArray(e1,a1)

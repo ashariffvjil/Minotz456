@@ -28,24 +28,27 @@ class Module extends CI_Controller {
 		$this->form_validation->set_rules('module_name', 'Module name', 'required');
 		if ($this->form_validation->run() == FALSE)
 		{
-						 
 			echo json_encode(array('st'=>0, 'msg' => validation_errors()));
 		}
 		else 
 		{
-		$module_name = $this->input->post('module_name');
-		
-		
-		/* $result=$this->module->createmodule($module_name);
-		if($result) 
-		{
-			echo json_encode($result);
-		} */
+			echo '----------------------------';
+			$module_name = $this->input->post('module_name');
+			//$this->load->view('configurator');
 		}
-		//echo '------------------------------'.$module_name;
-		$this->load->view('configurator');
+		
 	}
+	public function save_module()
+	{
+		
 	
+	
+	
+	
+	
+	
+	
+	}
 
  	
 
