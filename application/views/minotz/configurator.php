@@ -241,7 +241,8 @@ $("#properties").css('display',"none");
     }).sortable();
 });
 </script>
-<?php $module_name=$_REQUEST['module_name']; ?>
+<?php $module_name=$_REQUEST['module_name'];
+ ?>
 
 <div id="container">
 	<h1>Configurator</h1>
@@ -273,7 +274,7 @@ $("#properties").css('display',"none");
 			<!----------  Create the form-------------->
 			<div class="col-lg-7">
 				<div class="panel panel-primary" >
-					<div class="panel-heading"> <?php echo $module_name ?> </div>
+					<div class="panel-heading"> <?php echo strtoupper($module_name) ?> </div>
 					<div class="panel-body1" id="frmdiv">
 					</div>
 				</div>
