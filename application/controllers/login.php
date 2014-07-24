@@ -24,7 +24,11 @@ class Login extends CI_Controller {
    }
    public function signup()
 	{
-	 $this->load->view('signup',array('header'=>false));
+	$countries_data=$this->user->getCountries();
+	$data['countries']=$countries_data;
+	$occupation_data=$this->user->getOccupations();
+	$data['occupations']=$occupation_data;
+		$this->load->view('signup',array('header'=>false,'data'=>$data));
    }
     public function logout()
 	{
@@ -81,11 +85,15 @@ class Login extends CI_Controller {
  	public function save_signup()
 	{
  		$this->load->library('form_validation');
-		$this->form_validation->set_rules('username', 'User Name', 'required|min_length[5]|max_length[12]');		
+		$this->form_validation->set_rules('first_name', 'First Name', 'required');
+		$this->form_validation->set_rules('last_name', 'Last Name', 'required');
+		$this->form_validation->set_rules('country_id', 'Country', 'required');
 		$this->form_validation->set_rules('email', 'Email Address', 'required|valid_email');
-		$this->form_validation->set_rules('specialise', 'Specialised In', 'required');
+		$this->form_validation->set_rules('username', 'User Name', 'required|min_length[5]|max_length[12]');		
 		$this->form_validation->set_rules('password', 'Password', 'required|matches[re-password]');
 		$this->form_validation->set_rules('re-password', 'Confirm Password', 'required');
+		$this->form_validation->set_rules('zipcode', 'zipcode', 'required');
+		$this->form_validation->set_rules('occupation_id', 'Occupation', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -94,11 +102,16 @@ class Login extends CI_Controller {
 		}
 		else 
 		{
+			$first_name = $this->input->post('first_name');
+			$last_name = $this->input->post('last_name');
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
 			$email = $this->input->post('email');
+			$country_id = $this->input->post('country_id');
+			$zipcode = $this->input->post('zipcode');
+			$occupation_id = $this->input->post('occupation_id');
 			
-			$result=$this->user->signup($username,$email,$password);
+			$result=$this->user->signup($first_name,$last_name,$country_id,$zipcode,$occupation_id,$username,$email,$password);
 			if($result) 
 			{
 			echo json_encode($result);

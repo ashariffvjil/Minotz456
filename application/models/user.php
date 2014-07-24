@@ -18,8 +18,20 @@ class user extends CI_Model
 	 $pwd=do_hash($str, 'md5');
 	 return $pwd.':'.$salt;
 	 }
+	 function getCountries()
+        {
+            $query = $this->db->query('call getCountries()');
+
+           return $query->result();
+        }
 	 
-	 
+	 function getOccupations()
+        {
+            $this->db->reconnect();
+			$query = $this->db->query('call getOccupations()');
+
+           return $query->result();
+        }
 	 function checkLogin($username, $password)
 	 {
 	  
@@ -47,19 +59,11 @@ class user extends CI_Model
 	     return $result;
 	   
 	 }
-	 function signup($username,$email,$password)
+	 function signup($first_name,$last_name,$country_id,$zipcode,$occupation_id,$username,$email,$password)
 	 {
 	   $password=$this->password_encrypt($password);
 	   
-	    $queryUsername =  $this->db->query("call getUserdetailsByUsername('".$username."')");
-	 	 $this->db->reconnect();
-	   if($queryUsername->num_rows() == 1)
-	   {
-	    $result= array('st'=>0, 'msg' =>'Username Already Exists');
-		 return $result;
-	   }
-	 
-	   $queryEmail =  $this->db->query("call getUserdetailsByEmail('".$email."')");
+	    $queryEmail =  $this->db->query("call getUserdetailsByEmail('".$email."')");
 	   $this->db->reconnect();
 	    
 		if($queryEmail->num_rows() == 1)
@@ -68,8 +72,14 @@ class user extends CI_Model
 	   return $result;
 	   }
 	   
-	  
-	   $query =  $this->db->query("call saveUser('".$username."','".$email."','".$password."')");
+	     $queryUsername =  $this->db->query("call getUserdetailsByUsername('".$username."')");
+	 	 $this->db->reconnect();
+	   if($queryUsername->num_rows() == 1)
+	   {
+	    $result= array('st'=>0, 'msg' =>'Username Already Exists');
+		 return $result;
+	   }
+	   $query =  $this->db->query("call saveUser('".$first_name."','".$last_name."','".$country_id."','".$zipcode."','".$occupation_id."','".$username."','".$email."','".$password."')");
 	 	
 		   if($query->num_rows() == 1)
 		   {

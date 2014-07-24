@@ -124,14 +124,14 @@ class MY_Loader extends CI_Loader {
 			
 			$data['content'] = $this->_ci_load(array(
 				'_ci_view' => $this->template.'/'.$view.'.php', 
-				'_ci_vars' => $this->_ci_object_to_array($vars),
+				'_ci_vars' => $this->_ci_object_to_array($vars['data']),
 				'_ci_return' => TRUE)
 			);
 			
 			if($vars['header'])
 			$data['header'] = $this->_ci_load(array(
 				'_ci_view' => $this->template.'/includes/header.php', 
-				'_ci_vars' => $this->_ci_object_to_array($vars),
+				'_ci_vars' => $this->_ci_object_to_array($vars['data']),
 				'_ci_return' => TRUE)
 			);
 			
@@ -148,7 +148,7 @@ class MY_Loader extends CI_Loader {
 			{
 				$data['includes'] .= '<script type="text/javascript" src="'.$js_file.'"></script>';
 			}
-
+			
 			return $this->_ci_load(array(
 				'_ci_view' => '../../themes/'.$this->template.'/theme.php', 
 				'_ci_vars' => $data, 
