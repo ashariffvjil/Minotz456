@@ -244,8 +244,11 @@ $("#properties").css('display',"none");
 });
 </script>
 <?php 
-//print_r($_GET['data']);
-$module_name=$_REQUEST['data'];
+//print_r($_COOKIE['modulename']);
+
+//$module_name=$_REQUEST['data'];
+//var_dump($this->input->cookie('modulename'));
+//echo '----'. $cookieData = $this->input->get_cookie("modulename");
  ?>
 <div id="container">
 	<h1>Configurator</h1>

@@ -69,9 +69,19 @@ class user extends CI_Model
 		{
 		  return array('st'=>1, 'msg' =>'Submit Sucessfully');
 		}
-		//else{
-		//return array('st'=>2,'msg'=>'else');
-		//}
+		
+	}
+	function getmadules(){
+		$query =  $this->db->query("SELECT `modules_id`,`module_name` FROM `modules");
+		if($query->num_rows() >0)
+		{ 
+			foreach($query->result() as $row)
+			{
+				$data[] = $row;
+			}
+			return $data;
+		}
+		
 	}
 	 
 }

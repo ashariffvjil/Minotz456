@@ -19,8 +19,14 @@ class Module extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('module');
+		$data=$this->user->getmadules();
+		
+		$this->load->view('modules_list',$data);
 	}
+	public function newmodule()
+	{
+		$this->load->view('module');
+	} 
 	public function configurator()
 {
 	$this->load->view('configurator');
@@ -36,6 +42,14 @@ class Module extends CI_Controller {
 		else 
 		{
 			$module_name = $this->input->post('modules_name');
+			 $this->load->helper('cookie');
+			$cookie = array(
+				'name'   => 'modulename',
+				'value'  => $module_name,
+				);
+
+			$this->input->set_cookie($cookie); 
+			//var_dump($this->input->cookie('modulename', false)); 
 			echo json_encode(array('st'=>1,'modules_name'=>$module_name));
 		}
 	}
