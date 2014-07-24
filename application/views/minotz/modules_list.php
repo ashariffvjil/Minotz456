@@ -11,7 +11,9 @@
 					<fieldset>
 						<div class="form-group">
 						
-							<?php foreach($results as $data):?>
+							<?php 
+							//print_r($results);
+							foreach($results as $data):?>
 								<?php echo $data->modules_id?> - <?php echo $data->module_name?><br />
 								<?php endforeach;?>
 							

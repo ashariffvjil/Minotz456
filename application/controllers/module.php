@@ -19,7 +19,7 @@ class Module extends CI_Controller {
 	 */
 	public function index()
 	{
-		$data=$this->user->getmadules();
+		$data['results']=$this->user->getmadules();
 		$this->load->view('modules_list',$data);
 	}
 	public function newmodule()
