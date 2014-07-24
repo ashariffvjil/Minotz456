@@ -63,10 +63,10 @@ class Patients extends CI_Controller {
 			$zipcode = $this->input->post('zipcode');
 			$country=$this->input->post('country_id');
 			$photo_path=$this->input->post('txt_photo');
-			//$user=$this->session->userdata('user');
-			//$userid=$user['userid'];
-			$userid='3';
-			$result=$this->patients->savepatient($userid,$first_name,$last_name,$dob,$gender,$hospital_mrn,$nhs_number,$shortinfo,$address,$address1,$city,$state,$zipcode,$country,$phone,$photo_path);
+			$user=$this->session->userdata('user');
+			$userid=$user['userid'];
+			//$userid='3';
+			$result=$this->patients_models->savepatient($userid,$first_name,$last_name,$dob,$gender,$hospital_mrn,$nhs_number,$shortinfo,$address,$address1,$city,$state,$zipcode,$country,$phone,$photo_path);
 			if($result) 
 			{
 				echo json_encode($result);

@@ -1,5 +1,5 @@
 <?php
-class module extends CI_Model
+class logxmodules extends CI_Model
 {
 	function savemodule($module_name,$modules_description)
 	{
@@ -21,6 +21,14 @@ class module extends CI_Model
 			return $data;
 		}
 		
+	}
+	function logx($name)
+	{
+		$query =  $this->db->query("call savelogx('".$name."')");
+		if($query->num_rows() == 1)
+		{
+		  return array('st'=>1,'msg' =>'Submit Sucessfully');
+		}
 	}
 }
 	?>

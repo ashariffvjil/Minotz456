@@ -27,12 +27,12 @@ class Logx extends CI_Controller {
 		$this->form_validation->set_rules('logx_name', 'Logx Name', 'required');
 		if ($this->form_validation->run() == FALSE)
 		{
-			echo json_encode(array('msg' => validation_errors()));
+			echo json_encode(array('st'=>0,'msg' => validation_errors()));
 		}
 		else 
 		{
 			$logx_name = $this->input->post('logx_name');
-			$result=$this->logx->logx($logx_name);
+			$result=$this->logxmodules->logx($logx_name);
 			if($result) 
 			{
 			echo json_encode($result);
