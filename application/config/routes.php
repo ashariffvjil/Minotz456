@@ -46,3 +46,4 @@ $route['404_override'] = '';
 /* Location: ./application/config/routes.php */
 $route['logout'] = 'login/logout';
 $route['signup'] = 'login/signup';
+$route['configurator'] = 'module/configurator';
