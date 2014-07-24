@@ -1,30 +1,33 @@
 function gettextbox_properties(obj,type)
 {
-//alert('ssss');
-	//var name=document.activeElement.name;
 	var id=obj.id;
 	var name=obj.name;
+	if(type=='text')
+		$('#trid_placeholder').show();
+	else
+		$('#trid_placeholder').hide();
 	var containerPos = $('.panel-body1').offset();
 	var inputPos = $('#'+id).offset();
 	relativeOffset = { 
 		top: inputPos.top - containerPos.top,
 		left: inputPos.left - containerPos.left 
 	};
-	var xPos = relativeOffset.left;
-	var yPos = relativeOffset.top;
-	var tbwidth = document.getElementById(id).offsetWidth;
-	var tbheight = document.getElementById(id).offsetHeight;
-               
-				
-	$('#id_tposition').val(parseInt(yPos));
-	$('#id_lposition').val(parseInt(xPos));
-	$('#id_width').val(tbwidth);
-	$('#id_height').val(tbheight);
+	var left_pos = relativeOffset.left;
+	var top_pos = relativeOffset.top;
+	var ele_width = document.getElementById(id).offsetWidth;
+	var ele_height = document.getElementById(id).offsetHeight;
+    var placeholder_val=$('#'+id).attr('placeholder');  
+	if ( $('#'+id).is('[readonly]') ) {
+		$('#rdo_readonlyS').prop("checked",true); 
+	}else{ $('#rdo_readonlyN').prop("checked",true);  }
+	//Assigning the values to text boxes			
+	$('#id_tposition').val(parseInt(top_pos));
+	$('#id_lposition').val(parseInt(left_pos));
+	$('#id_width').val(ele_width);
+	$('#id_height').val(ele_height);
 	$('#id_fname').val(name);
 	$('#id_cid').text(id);
-
-
-
+	$('#id_placeholder').val(placeholder_val);  
 }
 function setposition(top,left,id_cid,width,height)
 {
@@ -49,23 +52,29 @@ function setposition(top,left,id_cid,width,height)
 		document.getElementById(left).focus();
 		return false;
 	}
-	cntrlid.style.position = 'relative';  // position it
+	cntrlid.style.position = 'relative';  
 	cntrlid.style.left = (pleft)+'px';
 	cntrlid.style.top = (ptop)+'px';  
 	cntrlid.style.width = (cwidth)+'px';  
 	cntrlid.style.height = (cheight)+'px';  
-
-	//activeid.style.position['top'] = ptop+'px';
- //alert(act_id);
-
 }
 function setplaceholder(obj,id_cid)
 {
 	var act_id=document.getElementById(id_cid).innerHTML;
-	var cntrlid=document.getElementById(act_id);
 	var val=obj.value;
-	//alert(act_id+'----'+cntrlid+'---'+val);
 	$('#'+act_id).attr('placeholder',val);
+}
+function getreadonlystatus(obj,id_cid)
+{
+	var readonly_status=$('#rdo_readonlyS').is(':checked')?$('#rdo_readonlyS').val():$('#rdo_readonlyN').val();
+	var act_id=document.getElementById(id_cid).innerHTML;
+	if(readonly_status=='Yes')
+	{
+		$('#'+act_id).attr('readonly', 'true');
+	}
+	else{
+		$('#'+act_id).removeAttr('readonly');
+	}
 
 
 }
