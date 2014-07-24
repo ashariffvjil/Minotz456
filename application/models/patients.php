@@ -1,5 +1,5 @@
 <?php
-class patientsmodel extends CI_Model
+class patients extends CI_Model
 {
 	function savepatient($userid,$first_name,$last_name,$dob,$gender,$hospital_mrn,$nhs_number,$shortinfo,$address,$address1,$city,$state,$zipcode,$country,$phone,$photo_path)
 	{
