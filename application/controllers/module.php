@@ -19,7 +19,7 @@ class Module extends CI_Controller {
 	 */
 	public function index()
 	{
-		$data['results']=$this->user->getmadules();
+		$data['results']=$this->module->getmadules();
 		$this->load->view('modules_list',$data);
 	}
 	public function newmodule()
@@ -63,7 +63,7 @@ class Module extends CI_Controller {
 		{
 			$module_name = $this->input->post('hid_modulename');
 			$modules_description = $this->input->post('txt_description');
-			$result=$this->user->savemodule($module_name,$modules_description);
+			$result=$this->module->savemodule($module_name,$modules_description);
 			if($result) 
 			{
 				echo json_encode($result);

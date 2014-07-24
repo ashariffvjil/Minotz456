@@ -61,28 +61,14 @@ class user extends CI_Model
 	   }
 	  
 	 }
-	 function savemodule($module_name,$modules_description)
+	 function getCountries()
 	{
-		$query =  $this->db->query("call saveModules('".$module_name."','3','".$modules_description."')");
-		//if($query->num_rows() == 1)
-		if($query)
-		{
-		  return array('st'=>1, 'msg' =>'Submit Sucessfully');
-		}
-		
+		$query = $this->db->query('call getCountries()');
+	    return $query->result();
 	}
-	function getmadules(){
-		$query =  $this->db->query("SELECT `modules_id`,`module_name` FROM `modules");
-		if($query->num_rows() >0)
-		{ 
-			foreach($query->result() as $row)
-			{
-				$data[] = $row;
-			}
-			return $data;
-		}
-		
-	}
+	
+	 
+	
 	 
 }
 	?>
