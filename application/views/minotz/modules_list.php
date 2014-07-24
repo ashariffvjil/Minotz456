@@ -7,7 +7,7 @@
 			</div>
 			<div id="validation-error" ></div>
 			<div class="panel-body">
-			 <?php //echo form_open('module/newmodule', array('id'=>'frm','name'=>'frm')); ?>
+			 <?php echo form_open('module/newmodule', array('id'=>'frm','name'=>'frm')); ?>
 					<fieldset>
 						<div class="form-group">
 						
@@ -17,10 +17,7 @@
 							
 							
 							
-						<?php
 						
-						 }
-						 ?>
 						</div>
 						
 						<!-- Change this to a button or input when using this as a form -->
