@@ -1,0 +1,45 @@
+<table width=100%  >
+	<tr>
+		<td>Type</td>
+		<td id='tdid_type'></td>
+	</tr>
+	<tr>
+		<td>Caption</td>
+		<td><input type='text' name='txt_caption' id='id_caption' class='textprop' onchange='setcaption(this,"id_cid")' ></td>
+	</tr>
+	<tr>
+		<td>Hide</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>Name</td>
+		<td><input type='text' name='txt_fname' id='id_fname' class='textprop'></td>
+	</tr>
+	<tr><td id='lblid'>ID:</td><td id='id_cid'></td></tr>	
+	<tr>
+		<td>Left-position</td>
+		<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_lposition' id='id_lposition' onkeypress='return onlynumbers(event)' maxlength=3 class='textprop' onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
+	</tr>
+	<tr>
+		<td>Top-position</td>
+		<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_tposition' id='id_tposition' onkeypress='return onlynumbers(event)' maxlength=3 class='textprop' onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
+	</tr>
+	<tr>
+		<td>Width</td>
+		<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_width' id='id_width' class='textprop' onkeypress='return onlynumbers(event)' maxlength=3 onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
+	</tr>
+	<tr>
+		<td>Height</td>
+		<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_height' id='id_height' class='textprop' onkeypress='return onlynumbers(event)' maxlength=3 onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
+	</tr>
+	<tr id="trid_placeholder">
+		<td>Placeholder</td>
+		<td><input type='text' name='txt_placeholder' id='id_placeholder' class='textprop' onchange='setplaceholder(this,"id_cid")' ></td>
+	</tr>
+	<tr>
+		<td>Readonly</td>
+		<td><input type='radio' name='rdo_readonly' id='rdo_readonlyS' value='Yes' onclick='getreadonlystatus(this,"id_cid")' >YES
+			<input type='radio' name='rdo_readonly' id='rdo_readonlyN' value='No' onclick='getreadonlystatus(this,"id_cid")' >NO
+		</td>
+	</tr>
+</table>

@@ -307,37 +307,7 @@ $module_name='FORM';//$_REQUEST['data'];
 									<td>Name</td>
 									<td><input type='text' name='txt_fname' id='id_fname' class='textprop'></td>
 								</tr>
-								<tr><td id='lblid'>ID:</td><td id='id_cid'></td></tr>
-								<tr id='trid_minlength'>
-									<td>Min Length</td>
-									<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_minlength' id='id_minlength' onkeypress='return onlynumbers(event)' maxlength=3 class='textprop' onchange='return setlengths("id_minlength","id_maxlength","id_cid")'></td>
-								</tr>
-								<tr id='trid_maxlength'>
-									<td>Max Length</td>
-									<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_maxlength' id='id_maxlength' onkeypress='return onlynumbers(event)' maxlength=3 class='textprop' onchange='return setlengths("id_minlength","id_maxlength","id_cid")'></td>
-								</tr>
-								<tr id='trid_multiline'>
-									<td>Multi-line</td>
-									<td><div class="onoffswitch">
-											<input type="checkbox" name="onoff_multiline" class="onoffswitch-checkbox" onclick='getmultiline_status(this,"id_cid")'  id="id_onoff_multiline" checked>
-											<label class="onoffswitch-label" for="id_onoff_multiline">
-											<span class="onoffswitch-inner"></span>
-											<span class="onoffswitch-switch"></span>
-											</label>
-										</div>
-									</td>
-								</tr>
-								<tr id='trid_required'>
-									<td>Required</td>
-									<td><div class="onoffswitch">
-											<input type="checkbox" name="onoff_required" class="onoffswitch-checkbox" onclick='getrequired(this,"id_cid")'  id="id_onoff_required" checked>
-											<label class="onoffswitch-label" for="id_onoff_required">
-											<span class="onoffswitch-inner"></span>
-											<span class="onoffswitch-switch"></span>
-											</label>
-										</div>
-									</td>
-								</tr>
+								<tr><td id='lblid'>ID:</td><td id='id_cid'></td></tr>	
 								<tr>
 									<td>Left-position</td>
 									<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_lposition' id='id_lposition' onkeypress='return onlynumbers(event)' maxlength=3 class='textprop' onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
@@ -352,18 +322,16 @@ $module_name='FORM';//$_REQUEST['data'];
 								</tr>
 								<tr>
 									<td>Height</td>
-									<td><input type='text' onDrop="return false;" onPaste="return false;"  name='txt_height' id='id_height' class='textprop' onkeypress='return onlynumbers(event)' maxlength=3 onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
+									<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_height' id='id_height' class='textprop' onkeypress='return onlynumbers(event)' maxlength=3 onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
 								</tr>
-								<tr id="trid_fontstyle">
+								<!--<tr id="trid_fontstyle">
 									<td>Font style</td>
-									<td><a href='#' id='idfnt_regular' onclick='getfontstyle_change("regular","id_cid")' >Regular</a>/<a href='#' id='idfnt_bold' onclick='getfontstyle_change("bold","id_cid")'>Bold</a></td>
+									<td><a href='#' id='idfnt_regular' onclick='getfontstylechange(this,"id_cid")' >Regular</a>/<a href='#' id='idfnt_bold'>Bold</a></td>
 								</tr>
 								<tr id="trid_fontstyle">
 									<td>Font size</td>
-									<td><a href='#' onclick='getfontsize_change("large","id_cid")' >Large</a>/
-										<a href='#' onclick='getfontsize_change("medium","id_cid")' >Medium</a>/
-										<a href='#' onclick='getfontsize_change("small","id_cid")' >Small</a></td>
-								</tr> 
+									<td><a href='#' id='idfnt_size' >Large/Medium/Small</a></td>
+								</tr> -->
 								<tr id="trid_placeholder">
 									<td>Placeholder</td>
 									<td><input type='text' name='txt_placeholder' id='id_placeholder' class='textprop' onchange='setplaceholder(this,"id_cid")' ></td>

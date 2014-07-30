@@ -9,5 +9,32 @@ class patients_models extends CI_Model
 			return array('st'=>1, 'msg' =>'Submit Sucessfully');
 		}
 	}
+	function getPatients()
+	{
+		$query = $this->db->query('call getPatients()');
+	    return $query->result();
+	}
+	function getDoctors()
+	{
+		 $this->db->reconnect();
+		$query = $this->db->query('call getDoctors()');
+	    return $query->result();
+	}
+	function getlogxs()
+	{
+		 $this->db->reconnect();
+		$query = $this->db->query('call getlogx()');
+	    return $query->result();
+	}
+	function saveappointment($userid,$patient_name,$doctor_name,$logx_name,$doa,$note)
+	{
+		$query =  $this->db->query("call saveAppointment('".$userid."','".$patient_name."','".$doctor_name."','".$logx_name."','".$doa."','".$note."')");
+		if($query)
+		{
+			return array('st'=>1, 'msg' =>'Submit Sucessfully');
+		}
+	
+	}
+	
 }
 	?>

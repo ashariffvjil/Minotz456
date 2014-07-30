@@ -8,8 +8,9 @@
 			</div>
 			<div id="validation-error" ></div>
 			<div class="panel-body">
-			 <?php echo form_open('patients/newpatient', array('id'=>'frm','name'=>'frm')); ?>
-					<fieldset>
+			 <?php $attributes = array('name' => 'frm1','id'=>'id_frm');
+				echo form_open_multipart('patients/newpatient',$attributes); ?>
+				<fieldset>
 					<div class="col-md-6 col-xs-12"> 
 						<div class="form-group">
 							<label for="first_name">*First Name</label>
@@ -20,8 +21,13 @@
 							<input class="form-control" placeholder="Last Name" value="" name="txt_lastname" type="text" autofocus="">
                         </div>
 						<div class="form-group">
-							<label for="txt_dob">*Date of Birth</label>
-							<input class="form-control" placeholder="Date of Birth" name="txt_dob" type="text" value="">
+							<label for="txt_dob">*Date of Birth</label><br>
+							<?php
+								echo $birth_date_day;
+								echo $birth_date_month;
+								echo $birth_date_year;
+							?>
+							<!--<input class="form-control" placeholder="Date of Birth" name="txt_dob" type="text" value="">-->
 						</div>
 						<div class="form-group">
 							<label for="id_gender">*Gender</label>
@@ -45,8 +51,6 @@
 						
 					</div>
 					<div class="col-md-6 col-xs-12"> 
-										
-						
 						<div class="form-group">
 						<label for="txt_address">*Address</label>
 							<input class="form-control" placeholder="Address" name="txt_address" type="text" value="">
@@ -65,7 +69,7 @@
 						</div>
 						<div class="form-group">
 							  <label for="zipcode">*Postal Code</label>
-                                 <input class="form-control" placeholder="Postal Code" value="<?php echo set_value('zipcode'); ?>" name="txt_zipcode" type="text" autofocus="">
+                                 <input class="form-control" placeholder="Postal Code" value="" name="txt_zipcode" type="text" autofocus="">
                                 </div>
 						<div class="form-group">
 						
@@ -79,22 +83,24 @@
 							<input class="form-control" placeholder="Phone Number" name="txt_phone" type="text" value="">
 						</div>
 						<div class="form-group">
-							<label for="txt_photo">*Photo</label>
-							<input class="form-control" placeholder="Photo" name="txt_photo" type="text" value="">
+							<label for="txt_image">*Photo</label>
+							<input type="file" name="txt_image" size="20"  />
+							<!--<input class="form-control" placeholder="Photo" name="txt_photo" type="text" value="">-->
 						</div>
 					</div>	
-						<!-- Change this to a button or input when using this as a form -->
-						<button  type="submit"class="btn btn-lg btn-primary btn-block">Create Patient</button>
-					</fieldset>
+					<!-- Change this to a button or input when using this as a form -->
+					<button  type="submit"class="btn btn-lg btn-primary btn-block">Create Patient</button>
+				</fieldset>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
+
 <script type="text/javascript">
  $(document).ready(function() {
-	$('#frm').submit(function(){
-		$.post($('#frm').attr('action'), $('#frm').serialize(), function( data ) {
+	$('#id_frm').submit(function(){
+		$.post($('#id_frm').attr('action'), $('#id_frm').serialize(), function( data ) {
 			if(data.st == 0)
 			{
 				$('#validation-error').html(data.msg).addClass('alert alert-danger');

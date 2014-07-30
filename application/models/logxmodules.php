@@ -20,7 +20,7 @@ class logxmodules extends CI_Model
 			}
 			return $data;
 		}
-		
+		return 0;
 	}
 	function logx($name)
 	{

@@ -27,8 +27,16 @@ class Module extends CI_Controller {
 		$this->load->view('module');
 	} 
 	public function configurator()
-{
-	$this->load->view('configurator');
+	{
+		$this->load->view('configurator');
+	}
+	public function prop_header()
+	{
+		$this->load->view('prop_header');
+	}
+	public function prop_subheader()
+	{
+		$this->load->view('prop_subheader');
 	}
 	public function check_configurator()
 	{
