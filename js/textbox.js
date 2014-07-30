@@ -16,6 +16,23 @@ function gettextbox_properties(obj,type)
 	var caption=$('#'+id).html();
 	var placeholder_val=$('#'+id).attr('placeholder'); 
 	
+	//$('#trid_leftpos').hide();
+	//$('#trid_toppos').hide();
+	//$('#trid_width').hide();
+	//$('#trid_height').hide();
+	
+	$('#trid_required').hide();
+	$('#trid_name').hide();
+	$('#trid_placeholder').hide();
+	$('#trid_readonly').hide();
+	$('#trid_multiline').hide();
+	$('#trid_maxlength').hide();
+	$('#trid_minlength').hide();
+	$('#trid_fontstyle').hide();
+	$('#trid_fontsize').hide();
+	$('#trid_mintime').hide();
+	$('#trid_maxtime').hide();
+	
 	if(type=='header')
 	{
 		$('#tdid_type').text(type);
@@ -24,15 +41,7 @@ function gettextbox_properties(obj,type)
 		$('#id_width').val(ele_width);
 		$('#id_height').val(ele_height);
 		$('#id_cid').text(id);
-		$('#id_placeholder').val(placeholder_val);  
 		$('#id_caption').val(caption);
-		$('#trid_name').hide();
-		$('#trid_placeholder').hide();
-		$('#trid_readonly').hide();
-		$('#trid_multiline').hide();
-		$('#trid_maxlength').hide();
-		$('#trid_minlength').hide();
-		
 	}
 	else if(type=='subheader')
 	{
@@ -42,11 +51,10 @@ function gettextbox_properties(obj,type)
 		$('#id_width').val(ele_width);
 		$('#id_height').val(ele_height);
 		$('#id_cid').text(id);
-		
 		$('#id_caption').val(caption);
-		$('#trid_name').hide();
-		$('#trid_placeholder').hide();
-		$('#trid_readonly').hide();
+		$('#trid_fontstyle').show();
+		$('#trid_fontsize').show();
+		
 	}
 	else if(type=='text')
 	{
@@ -58,10 +66,96 @@ function gettextbox_properties(obj,type)
 		$('#id_cid').text(id);
 		$('#id_placeholder').val(placeholder_val);  
 		$('#id_caption').val(caption);
+		$('#trid_placeholder').show();
 		$('#trid_readonly').show();
+		$('#trid_required').show();
 		$('#trid_multiline').show();
 		$('#trid_maxlength').show();
 		$('#trid_minlength').show();
+	}
+	else if(type=='checkbox')
+	{
+		$('#tdid_type').text(type);
+		$('#id_tposition').val(parseInt(top_pos));
+		$('#id_lposition').val(parseInt(left_pos));
+		$('#id_width').val(ele_width);
+		$('#id_height').val(ele_height);
+		$('#id_cid').text(id);
+		$('#id_caption').val(caption);
+		$('#trid_required').show();
+	}
+	else if(type=='Radio-buttons')
+	{
+		$('#tdid_type').text(type);
+		$('#id_tposition').val(parseInt(top_pos));
+		$('#id_lposition').val(parseInt(left_pos));
+		$('#id_width').val(ele_width);
+		$('#id_height').val(ele_height);
+		$('#id_cid').text(id);
+		$('#id_caption').val(caption);
+		$('#trid_required').show();
+		//$('#trid_name').show();
+		//$('#id_fname').val(name);
+	}
+	else if(type=='Drop-down list')
+	{
+		$('#tdid_type').text(type);
+		$('#id_tposition').val(parseInt(top_pos));
+		$('#id_lposition').val(parseInt(left_pos));
+		$('#id_width').val(ele_width);
+		$('#id_height').val(ele_height);
+		$('#id_cid').text(id);
+		$('#id_caption').val(caption);
+		$('#trid_required').show();
+	}
+	else if(type=='sketch')
+	{
+		$('#tdid_type').text(type);
+		$('#id_tposition').val(parseInt(top_pos));
+		$('#id_lposition').val(parseInt(left_pos));
+		$('#id_width').val(ele_width);
+		$('#id_height').val(ele_height);
+		$('#id_cid').text(id);
+		$('#id_caption').val(caption);
+		$('#trid_required').show();
+	}
+	else if(type=='Textarea')
+	{
+		$('#tdid_type').text(type);
+		$('#id_tposition').val(parseInt(top_pos));
+		$('#id_lposition').val(parseInt(left_pos));
+		$('#id_width').val(ele_width);
+		$('#id_height').val(ele_height);
+		$('#id_cid').text(id);
+		$('#id_caption').val(caption);
+		$('#trid_required').show();
+	}
+	else if(type=='Date')
+	{
+		$('#tdid_type').text(type);
+		$('#id_tposition').val(parseInt(top_pos));
+		$('#id_lposition').val(parseInt(left_pos));
+		$('#id_width').val(ele_width);
+		$('#id_height').val(ele_height);
+		$('#id_cid').text(id);
+		$('#id_caption').val(caption);
+		$('#trid_required').show();
+		$('#trid_placeholder').show();
+		//$('#trid_maxlength').show();
+	}
+	else if(type=='Time')
+	{
+		$('#tdid_type').text(type);
+		$('#id_tposition').val(parseInt(top_pos));
+		$('#id_lposition').val(parseInt(left_pos));
+		$('#id_width').val(ele_width);
+		$('#id_height').val(ele_height);
+		$('#id_cid').text(id);
+		$('#id_caption').val(caption);
+		$('#trid_required').show();
+		$('#trid_mintime').show();
+		$('#trid_maxtime').show();
+		$('#trid_placeholder').show();
 	}
 	else {
 	

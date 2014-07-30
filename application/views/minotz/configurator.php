@@ -10,7 +10,9 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/textbox.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/validchar.js"></script>
 <link rel="Stylesheet" type="text/css" href="<?php echo base_url() ?>themes/minotz/css/onoffswitch.css" />
-
+<link type="text/css" href="<?php echo base_url() ?>themes/minotz/css/ui-lightness/jquery-ui-1.8.19.custom.css" rel="stylesheet" />
+ <script type="text/javascript" src="<?php echo base_url() ?>themes/minotz/css/jquery.timepicker.js"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>themes/minotz/css/jquery.timepicker.css" />
 <!-------- color picker
 	<link rel="Stylesheet" type="text/css" href="<?php echo base_url() ?>js/jpicker/css/jpicker-1.1.6.min.css" />
 	<link rel="Stylesheet" type="text/css" href="<?php echo base_url() ?>js/jpicker/jPicker.css" />
@@ -44,7 +46,8 @@
 			var element_height=document.getElementById(e1[i].id).offsetHeight;
 			var placeholder=$('#'+e1[i].id).attr('placeholder');
 			var readonly_status=$('#'+e1[i].id).attr('readonly');
-			a1.push({'id' : e1[i].id,'type' : e1[i].type, 'name':e1[i].name,'value':e1[i].val,'attribute':{'leftposition':leftposition,'topposition':topposition,'element_width':element_width,'element_height':element_height,'placeholder':placeholder,'readonly':readonly_status}});
+			var required_status=$('#'+e1[i].id).attr('required');
+			a1.push({'id' : e1[i].id,'type' : e1[i].type, 'name':e1[i].name,'value':e1[i].val,'attribute':{'leftposition':leftposition,'topposition':topposition,'element_width':element_width,'element_height':element_height,'placeholder':placeholder,'required':required_status,'readonly':readonly_status}});
 		}
 		var resultset=json_encode(a1);
 		return resultset;
@@ -64,7 +67,7 @@ $("#properties").css('display',"none");
         appendTo: "body",
         helper: "clone"
     });
-	var i=0;var j=0;k=0;l=0;m=0;n=0;p=0;q=0;r=0;s=0;t=0;
+	var i=0;var j=0;k=0;l=0;m=0;n=0;p=0;q=0;r=0;s=0;t=0;u=0;v=0;w=0;
 	var dropPositionY=0;var dropPositionX=0;
     $(".panel-body1").droppable({
         activeClass: "ui-state-default",
@@ -114,11 +117,11 @@ $("#properties").css('display',"none");
 			}
 			// ADDING A RADIO BUTTION DYNAMICALLY AT RUN TIME
 			else if(ui.draggable.text()=='Radio button'){
-				var $ctrl = $('<input/>').attr({ type: 'radio',id:'id_rdo_'+k, name:'radio_'+k,onblur:'gettextbox_properties(this,"radio")'}).addClass("rad");
+				var $ctrl = $('<input/>').attr({ type: 'radio',id:'id_rdo_'+k, name:'radio_'+k,onblur:'gettextbox_properties(this,"Radio-buttons")'}).addClass("rad");
 				$(this).append($ctrl);
 				$("#id_rdo_"+k).draggable({ containment: ".panel-body1",
 				    drag: function(){
-						gettextbox_properties(this,'radio');
+						gettextbox_properties(this,'Radio-buttons');
 					},
 					scroll: false, cancel: null  
 				});
@@ -126,12 +129,12 @@ $("#properties").css('display',"none");
 			}
 			// ADDING A DROPDOWNLIST DYNAMICALLY AT RUN TIME
 			else if(ui.draggable.text()=='Dropdown list'){
-				var $ctrl = $('<select/>').attr({id:'id_dropdown_'+l , name:'dropdown_'+l,onblur:'gettextbox_properties(this,"dropdown")'}).addClass("select");
+				var $ctrl = $('<select/>').attr({id:'id_dropdown_'+l , name:'dropdown_'+l,onblur:'gettextbox_properties(this,"Drop-down list")'}).addClass("select");
 				var $ctrloptn=$('<option />', {value: '', text: 'Select'}).appendTo($ctrl);
 				$(this).append($ctrl);
 				$("#id_dropdown_"+l).draggable({ containment: ".panel-body1",
 				     drag: function(){
-						gettextbox_properties(this,'dropdown');
+						gettextbox_properties(this,'Drop-down list');
 					},
 					scroll: false, cancel: null  
 				});
@@ -178,8 +181,8 @@ $("#properties").css('display',"none");
 			}
 			// ADDING A LABEL DYNAMICALLY AT RUN TIME
 			else if(ui.draggable.text()=='Label'){
-				var lbl = prompt ("Enter Text","");
-				var $ctrl=$('<label/>').attr({id:'id_label_'+q,name:'Label_'+q,onblur:'gettextbox_properties(this,"label")'}).append("<b>"+lbl+"</b>");
+				var lbl = "Enter Here";
+				var $ctrl=$('<label/>').attr({id:'id_label_'+q,name:'Label_'+q,onblur:'gettextbox_properties(this,"label")'}).append(lbl);
 				$(this).append($ctrl);
 				$("#id_label_"+q).draggable({ containment: ".panel-body1",
 				    drag: function(){
@@ -218,18 +221,51 @@ $("#properties").css('display',"none");
 			}
 			// ADDING A SKETCH DYNAMICALLY AT RUN TIME
 			else if(ui.draggable.text()=='Sketch'){
-				var $ctrl=$('<div ></div>').attr({ 'id': 'id_sketch_'+t, name:'sketh_'+t,onblur:'gettextbox_properties(this,"sketh")'}).addClass("sketch");
+				var $ctrl=$('<div ></div>').attr({ 'id': 'id_sketch_'+t, name:'sketh_'+t,onblur:'gettextbox_properties(this,"sketch")'}).addClass("sketch");
 				$(this).append($ctrl);
 				$(".sketch").width(200).height(70);
 				$(".sketch").css('background-color','grey');
 				$("#id_sketch_"+t).draggable({ containment: ".panel-body1",
 				    drag: function(){
-						gettextbox_properties(this,'sketh');
+						gettextbox_properties(this,'sketch');
 					},
 					scroll: false, cancel: null  
 				});
 				t++;
+			}// ADDING A TEXTAREA DYNAMICALLY AT RUN TIME
+			else if(ui.draggable.text()=='Textarea'){
+				var $ctrl = $('<textarea/>').attr({ type: 'text', id:'id_textarea_'+u, name:'textarea_'+u, placeholder:'textarea'+u,onblur:'gettextbox_properties(this,"Textarea")'}).addClass("textarea");
+				$(this).append($ctrl);
+				$("#id_textarea_"+u).draggable({ containment: ".panel-body1",
+				    drag: function(){
+						gettextbox_properties(this,'Textarea');
+					},
+				 scroll: false, cancel: null  });
+				u++;
 			}
+			else if(ui.draggable.text()=='Date'){
+				var $ctrl = $('<input/>').attr({ type: 'text', id:'id_textdate_'+v, name:'textdate_'+v, placeholder:'Calender'+v,onblur:'gettextbox_properties(this,"Date")'}).addClass("date");
+				$(this).append($ctrl);
+				$("#id_textdate_"+v).datepicker({ dateFormat: 'd MM, yy' });
+				$("#id_textdate_"+v).draggable({ containment: ".panel-body1",
+				    drag: function(){
+						gettextbox_properties(this,'Date');
+					},
+				 scroll: false, cancel: null  });
+				v++;
+			}
+			else if(ui.draggable.text()=='Time'){
+				var $ctrl = $('<input/>').attr({ type: 'text', id:'id_texttime_'+w, name:'texttime_'+w, placeholder:'time'+w, onblur:'gettextbox_properties(this,"Time")'}).addClass("time");
+				$(this).append($ctrl);
+				$('#id_texttime_'+w).timepicker({ 'scrollDefault': 'now' });
+				$("#id_texttime_"+w).draggable({ containment: ".panel-body1",
+				    drag: function(){
+						gettextbox_properties(this,'Time');
+					},
+				 scroll: false, cancel: null  });
+				w++;
+			}
+			
         }
     }).sortable();
 });
@@ -264,6 +300,9 @@ $module_name='FORM';//$_REQUEST['data'];
 							<li>Page break</li>
 							<li>Line</li>
 							<li>Sketch</li>
+							<li>Textarea</li>
+							<li>Date</li>
+							<li>Time</li>
 						</ul>
 					</div>
 					
@@ -338,19 +377,19 @@ $module_name='FORM';//$_REQUEST['data'];
 										</div>
 									</td>
 								</tr>
-								<tr>
+								<tr id='trid_leftpos' >
 									<td>Left-position</td>
 									<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_lposition' id='id_lposition' onkeypress='return onlynumbers(event)' maxlength=3 class='textprop' onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
 								</tr>
-								<tr>
+								<tr id='trid_toppos' >
 									<td>Top-position</td>
 									<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_tposition' id='id_tposition' onkeypress='return onlynumbers(event)' maxlength=3 class='textprop' onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
 								</tr>
-								<tr>
+								<tr id='trid_width' >
 									<td>Width</td>
 									<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_width' id='id_width' class='textprop' onkeypress='return onlynumbers(event)' maxlength=3 onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
 								</tr>
-								<tr>
+								<tr id='trid_height' >
 									<td>Height</td>
 									<td><input type='text' onDrop="return false;" onPaste="return false;"  name='txt_height' id='id_height' class='textprop' onkeypress='return onlynumbers(event)' maxlength=3 onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
 								</tr>
@@ -358,7 +397,7 @@ $module_name='FORM';//$_REQUEST['data'];
 									<td>Font style</td>
 									<td><a href='#' id='idfnt_regular' onclick='getfontstyle_change("regular","id_cid")' >Regular</a>/<a href='#' id='idfnt_bold' onclick='getfontstyle_change("bold","id_cid")'>Bold</a></td>
 								</tr>
-								<tr id="trid_fontstyle">
+								<tr id="trid_fontsize">
 									<td>Font size</td>
 									<td><a href='#' onclick='getfontsize_change("large","id_cid")' >Large</a>/
 										<a href='#' onclick='getfontsize_change("medium","id_cid")' >Medium</a>/
@@ -372,6 +411,18 @@ $module_name='FORM';//$_REQUEST['data'];
 									<td>Readonly</td>
 									<td><input type='radio' name='rdo_readonly' id='rdo_readonlyS' value='Yes' onclick='getreadonlystatus(this,"id_cid")' >YES
 										<input type='radio' name='rdo_readonly' id='rdo_readonlyN' value='No' onclick='getreadonlystatus(this,"id_cid")' >NO
+									</td>
+								</tr>
+								<tr id="trid_mintime">
+									<td>Min Time</td>
+									<td><input type='text' name='txt_mintime_hh' id='id_mintime_hh' style='width:30px' placeholder='HH' maxlength=2 onchange='setplaceholder12(this,"id_cid")' >:
+										<input type='text' name='txt_mintime_mm' id='id_mintime_mm' style='width:30px' placeholder='MM' maxlength=2 onchange='setplaceholder12(this,"id_cid")' >
+									</td>
+								</tr>
+								<tr id="trid_maxtime">
+									<td>Max Time</td>
+									<td><input type='text' name='txt_maxtime_hh' id='id_maxtime_hh' style='width:30px' placeholder='HH' maxlength=2  onchange='setplaceholder(this,"id_cid")' >:
+										<input type='text' name='txt_maxtime_mm' id='id_maxtime_mm' style='width:30px' placeholder='MM' maxlength=2  onchange='setplaceholder(this,"id_cid")' >
 									</td>
 								</tr>
 							</table>

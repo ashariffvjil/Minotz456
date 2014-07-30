@@ -1,3 +1,6 @@
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="<?php echo base_url() ?>js/jquery-ui.js"></script>
+<link type="text/css" href="<?php echo base_url() ?>themes/minotz/css/ui-lightness/jquery-ui-1.8.19.custom.css" rel="stylesheet" />
 
 <div class="row">
  <div class="col-md-8 col-md-offset-2">
@@ -30,26 +33,21 @@
 								 foreach($logx as $row )    $arr_logx[$row->logx_id] = $row->name;
            						 echo form_dropdown('logx_name',  $arr_logx,'','class="form-control"');?>
                         </div>
-						
 					</div>
 					<div class="col-md-6 col-xs-12"> 
 						<div class="form-group">
 							<label for="txt_doa">*Date of Appointment</label><br>
-							
-							<input class="form-control" placeholder="Date of Appointment" name="txt_doa" type="text" value="">
+							<input class="form-control" placeholder="Date of Appointment" name="txt_doa" id="id_doa" type="text" value="">
 						</div>
-						
 						<div class="form-group">
 							<label for="txt_userid">*Appointment Created By</label>
 							<input class="form-control" placeholder="Appointment Created By" name="txt_userid" type="text" value="">
 						</div>
-						
 					</div>
 					<div class="form-group">
 							<label for="txt_note">*Note</label>
 							<input class="form-control" placeholder="Note" name="txt_note" type="text" value="">
 					</div>
-					
 						<!-- Change this to a button or input when using this as a form -->
 						<button  type="submit" class="btn btn-lg btn-primary btn-block">Create Appointment</button>
 					</fieldset>
@@ -60,6 +58,9 @@
 </div>
 
 <script type="text/javascript">
+ $(function() {
+$("#id_doa").datepicker({ dateFormat: 'd MM, yy' });
+});
  $(document).ready(function() {
 	$('#frm').submit(function(){
 		$.post($('#frm').attr('action'), $('#frm').serialize(), function( data ) {
