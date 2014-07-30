@@ -32,6 +32,7 @@ function gettextbox_properties(obj,type)
 	$('#trid_fontsize').hide();
 	$('#trid_mintime').hide();
 	$('#trid_maxtime').hide();
+	$('#trid_maxdate').hide();
 	
 	if(type=='header')
 	{
@@ -141,7 +142,7 @@ function gettextbox_properties(obj,type)
 		$('#id_caption').val(caption);
 		$('#trid_required').show();
 		$('#trid_placeholder').show();
-		//$('#trid_maxlength').show();
+		$('#trid_maxdate').show();
 	}
 	else if(type=='Time')
 	{
@@ -156,6 +157,19 @@ function gettextbox_properties(obj,type)
 		$('#trid_mintime').show();
 		$('#trid_maxtime').show();
 		$('#trid_placeholder').show();
+	}
+	else if(type=='Image')
+	{
+		$('#tdid_type').text(type);
+		$('#id_tposition').val(parseInt(top_pos));
+		$('#id_lposition').val(parseInt(left_pos));
+		$('#id_width').val(ele_width);
+		$('#id_height').val(ele_height);
+		$('#id_cid').text(id);
+		$('#id_caption').val(caption);
+		$('#trid_required').show();
+		
+		
 	}
 	else {
 	
@@ -305,4 +319,31 @@ function getrequired(obj,id_cid)
 	}else{
 		$('#'+act_id).removeAttr('required');
 	}
+}
+function setdisabled_dates(obj,id_cid)
+{
+	var act_id=document.getElementById(id_cid).innerHTML;
+	var val=obj.value;
+	
+	//$('#'+act_id).datepicker({ maxDate: new Date, minDate: new Date(2014, 7, 30) });
+	$('#'+act_id).datepicker({dateFormat: 'dd/mm/yy', minDate:(0), maxDate:(1)});
+	//$('#'+act_id).datepicker({minDate: val});
+
+}
+function getuploadimg(obj,id_cid)
+{
+	 var url = './application/views/minotz/uploads/';
+	
+    $('#fileupload').fileupload({
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo('#files');
+            });
+        },
+        
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
 }

@@ -59,7 +59,17 @@
 
 <script type="text/javascript">
  $(function() {
-$("#id_doa").datepicker({ dateFormat: 'd MM, yy' });
+//$("#id_doa").datepicker({ dateFormat: 'd MM, yy' });
+ $("#id_doa").datepicker({
+        minDate: 0,
+        onSelect: function(theDate) {
+            $("#dataEnd").datepicker('option', 'mindate', new Date());
+        },
+        beforeShow: function() {
+            $('#ui-datepicker-div').css('z-index', 9999);
+        },
+        dateFormat:'d MM, yy'
+    });
 });
  $(document).ready(function() {
 	$('#frm').submit(function(){

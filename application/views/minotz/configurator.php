@@ -13,6 +13,7 @@
 <link type="text/css" href="<?php echo base_url() ?>themes/minotz/css/ui-lightness/jquery-ui-1.8.19.custom.css" rel="stylesheet" />
  <script type="text/javascript" src="<?php echo base_url() ?>themes/minotz/css/jquery.timepicker.js"></script>
   <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>themes/minotz/css/jquery.timepicker.css" />
+  <script src="<?php echo base_url() ?>js/jquery.fileupload.js"></script>
 <!-------- color picker
 	<link rel="Stylesheet" type="text/css" href="<?php echo base_url() ?>js/jpicker/css/jpicker-1.1.6.min.css" />
 	<link rel="Stylesheet" type="text/css" href="<?php echo base_url() ?>js/jpicker/jPicker.css" />
@@ -20,7 +21,6 @@
 	<script src="<?php echo base_url() ?>js/jpicker/jpicker-1.1.6.min.js" type="text/javascript"></script> ---------->
 <!--------End color picker ---------->
 <script type="text/javascript">
- 
 	//Json function
 	function json_encode(e){var t,n=this.window.JSON;try{if(typeof n==="object"&&typeof n.stringify==="function"){t=n.stringify(e);if(t===undefined){throw new SyntaxError("json_encode")}return t}var r=e;var i=function(e){var t=/[\\\"\u0000-\u001f\u007f-\u009f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;var n={"\b":"\\b","	":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"};t.lastIndex=0;return t.test(e)?'"'+e.replace(t,function(e){var t=n[e];return typeof t==="string"?t:"\\u"+("0000"+e.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+e+'"'};var s=function(e,t){var n="";var r="    ";var o=0;var u="";var a="";var f=0;var l=n;var c=[];var h=t[e];if(h&&typeof h==="object"&&typeof h.toJSON==="function"){h=h.toJSON(e)}switch(typeof h){case"string":return i(h);case"number":return isFinite(h)?String(h):"null";case"boolean":case"null":return String(h);case"object":if(!h){return"null"}if(this.PHPJS_Resource&&h instanceof this.PHPJS_Resource||window.PHPJS_Resource&&h instanceof window.PHPJS_Resource){throw new SyntaxError("json_encode")}n+=r;c=[];if(Object.prototype.toString.apply(h)==="[object Array]"){f=h.length;for(o=0;o<f;o+=1){c[o]=s(o,h)||"null"}a=c.length===0?"[]":n?"[\n"+n+c.join(",\n"+n)+"\n"+l+"]":"["+c.join(",")+"]";n=l;return a}for(u in h){if(Object.hasOwnProperty.call(h,u)){a=s(u,h);if(a){c.push(i(u)+(n?": ":":")+a)}}}a=c.length===0?"{}":n?"{\n"+n+c.join(",\n"+n)+"\n"+l+"}":"{"+c.join(",")+"}";n=l;return a;case"undefined":case"function":default:throw new SyntaxError("json_encode")}};return s("",{"":r})}catch(o){if(!(o instanceof SyntaxError)){throw new Error("Unexpected error type in json_encode()")}this.php_js=this.php_js||{};this.php_js.last_error_json=4;return null}}
 	//STORING A JSON  INTO A HIDDEN FIELD
@@ -67,7 +67,7 @@ $("#properties").css('display',"none");
         appendTo: "body",
         helper: "clone"
     });
-	var i=0;var j=0;k=0;l=0;m=0;n=0;p=0;q=0;r=0;s=0;t=0;u=0;v=0;w=0;
+	var i=0;var j=0;k=0;l=0;m=0;n=0;p=0;q=0;r=0;s=0;t=0;u=0;v=0;w=0;x=0;
 	var dropPositionY=0;var dropPositionX=0;
     $(".panel-body1").droppable({
         activeClass: "ui-state-default",
@@ -246,7 +246,7 @@ $("#properties").css('display',"none");
 			else if(ui.draggable.text()=='Date'){
 				var $ctrl = $('<input/>').attr({ type: 'text', id:'id_textdate_'+v, name:'textdate_'+v, placeholder:'Calender'+v,onblur:'gettextbox_properties(this,"Date")'}).addClass("date");
 				$(this).append($ctrl);
-				$("#id_textdate_"+v).datepicker({ dateFormat: 'd MM, yy' });
+				$("#id_textdate_"+v).datepicker({ dateFormat: 'dd/mm/yy' });
 				$("#id_textdate_"+v).draggable({ containment: ".panel-body1",
 				    drag: function(){
 						gettextbox_properties(this,'Date');
@@ -264,6 +264,17 @@ $("#properties").css('display',"none");
 					},
 				 scroll: false, cancel: null  });
 				w++;
+			}
+			else if(ui.draggable.text()=='Image'){
+				var $ctrl = $('<img/>').attr({ id:'id_image_'+x, name:'img_image'+x, src:'', onblur:'gettextbox_properties(this,"Image")'}).addClass("image");
+				$(this).append($ctrl);
+				
+				$("#id_image_"+x).draggable({ containment: ".panel-body1",
+				    drag: function(){
+						gettextbox_properties(this,'Image');
+					},
+				 scroll: false, cancel: null  });
+				x++;
 			}
 			
         }
@@ -303,6 +314,7 @@ $module_name='FORM';//$_REQUEST['data'];
 							<li>Textarea</li>
 							<li>Date</li>
 							<li>Time</li>
+							<li>Image</li>
 						</ul>
 					</div>
 					
@@ -413,6 +425,10 @@ $module_name='FORM';//$_REQUEST['data'];
 										<input type='radio' name='rdo_readonly' id='rdo_readonlyN' value='No' onclick='getreadonlystatus(this,"id_cid")' >NO
 									</td>
 								</tr>
+								<tr id="trid_maxdate">
+									<td>Max Date</td>
+									<td><input type='text' name='txt_maxdate' id='id_maxdate' class='textprop' placeholder='Max date' maxlength='10' onchange='setdisabled_dates(this,"id_cid")'></td>
+								</tr>
 								<tr id="trid_mintime">
 									<td>Min Time</td>
 									<td><input type='text' name='txt_mintime_hh' id='id_mintime_hh' style='width:30px' placeholder='HH' maxlength=2 onchange='setplaceholder12(this,"id_cid")' >:
@@ -425,6 +441,12 @@ $module_name='FORM';//$_REQUEST['data'];
 										<input type='text' name='txt_maxtime_mm' id='id_maxtime_mm' style='width:30px' placeholder='MM' maxlength=2  onchange='setplaceholder(this,"id_cid")' >
 									</td>
 								</tr>
+								<tr id="trid_image">
+									<td>Image</td>
+									<td><input type='file' name='txt_image' id='fileupload' >
+										<div id="files" class="files">
+									</td>
+								</tr></div>
 							</table>
 						</div>
 					</div>
@@ -455,4 +477,23 @@ $(document).ready(function() {
 		return false;			
 	});
 }); 
+$(function () {
+    'use strict';
+    // Change this to the location of your server-side upload handler:
+    var url = 'C:/wamp/www/Minotz456/application/views/minotz/uploads/';
+	
+    $('#fileupload').fileupload({
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+		alert('sss');
+            $.each(data.result.files, function (index, file) {
+			
+                $('<p/>').text(file.name).appendTo('#files');
+            });
+        },
+       
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
 </script>

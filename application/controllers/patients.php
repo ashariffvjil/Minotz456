@@ -32,7 +32,7 @@ class Patients extends CI_Controller {
 	}
 	 function newpatient()
 	{
-		$this->load->library('form_validation');
+		 $this->load->library('form_validation');
 		$this->form_validation->set_rules('txt_firstname', 'First Name', 'required');
 		$this->form_validation->set_rules('txt_lastname', 'Last Name', 'required');
 		$this->form_validation->set_rules('birth_date_year', 'Date of Birth Year', 'required');
@@ -54,20 +54,6 @@ class Patients extends CI_Controller {
 		}
 		else 
 		{ 
-			$first_name = $this->input->post('txt_firstname');
-			$last_name = $this->input->post('txt_lastname');
-			$dob=$this->input->post('birth_date_year').'-'.$this->input->post('birth_date_month').'-'.$this->input->post('birth_date_day');
-			$gender=$this->input->post('id_gender');
-			$hospital_mrn=$this->input->post('txt_hos_mrn');
-			$nhs_number=$this->input->post('txt_nhs');
-			$address=$this->input->post('txt_address');
-			$address1=$this->input->post('txt_address1');
-			$city=$this->input->post('txt_city');
-			$state=$this->input->post('txt_state');
-			$shortinfo=$this->input->post('txt_info');
-			$phone=$this->input->post('txt_phone');
-			$zipcode = $this->input->post('txt_zipcode');
-			$country=$this->input->post('country_id');
 			$config['upload_path'] = './application/views/minotz/uploads/';
 			$config['allowed_types'] = 'gif|jpg|png';
 			$config['max_size'] = '1000';
@@ -75,40 +61,45 @@ class Patients extends CI_Controller {
 			$config['max_height']  = '';
 			$config['overwrite'] = TRUE;
 			$config['remove_spaces'] = TRUE;
-
 			$this->load->library('upload', $config);
-			//print_r($this->upload->do_upload());
 			if ( ! $this->upload->do_upload())
 			{
 				$error = array('error' => $this->upload->display_errors());
-				
-			   //echo '-------'.$this->upload->display_errors();
+			    //echo '-------upload failed due to this error----->'.$this->upload->display_errors();
 			}
 			else
 			{
 				 $data = array('upload_data' => $this->upload->data());
-				
+				//echo $data['upload_data']['full_path'];
 			}
-			//print_r($_FILES);
-			//echo "<hr>".$_FILES['txt_image']['name'];
-			
-			$photo_path=$config['upload_path'].$_FILES['txt_image']['name'];//$this->input->post('txt_photo');
-			//$data['upload_data'] = $this->upload->data();
-			//$user=$this->session->userdata('user');
-			 
-			//$userid=$user['userid'];
-				$userid='3';
-			
-			$result=$this->patients_models->savepatient($userid,$first_name,$last_name,$dob,$gender,$hospital_mrn,$nhs_number,$shortinfo,$address,$address1,$city,$state,$zipcode,$country,$phone,$photo_path);
-			if($result) 
-			{
-				echo json_encode($result);
+			if($data){
+				$first_name = $this->input->post('txt_firstname');
+				$last_name = $this->input->post('txt_lastname');
+				$dob=$this->input->post('birth_date_year').'-'.$this->input->post('birth_date_month').'-'.$this->input->post('birth_date_day');
+				$gender=$this->input->post('id_gender');
+				$hospital_mrn=$this->input->post('txt_hos_mrn');
+				$nhs_number=$this->input->post('txt_nhs');
+				$address=$this->input->post('txt_address');
+				$address1=$this->input->post('txt_address1');
+				$city=$this->input->post('txt_city');
+				$state=$this->input->post('txt_state');
+				$shortinfo=$this->input->post('txt_info');
+				$phone=$this->input->post('txt_phone');
+				$zipcode = $this->input->post('txt_zipcode'); 
+				$country=$this->input->post('country_id');
+				$photo_path=$data['upload_data']['full_path'];
+				$user=$this->session->userdata('user');
+				//$userid=$user['userid'];
+					$userid='3';
+				$result=$this->patients_models->savepatient($userid,$first_name,$last_name,$dob,$gender,$hospital_mrn,$nhs_number,$shortinfo,$address,$address1,$city,$state,$zipcode,$country,$phone,$photo_path);
+				if($result) 
+				{
+					echo json_encode($result);
+				}
 			}
 
 		}
 	} 
-	
-	
 }
 
 /* End of file patients.php */

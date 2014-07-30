@@ -1,4 +1,4 @@
-
+<?php echo $error;?>
 <div class="row">
  <div class="col-md-8 col-md-offset-2">
 	
@@ -52,7 +52,7 @@
 					</div>
 					<div class="col-md-6 col-xs-12"> 
 						<div class="form-group">
-						<label for="txt_address">*Address</label>
+							<label for="txt_address">*Address</label>
 							<input class="form-control" placeholder="Address" name="txt_address" type="text" value="">
 						</div>
 						<div class="form-group">
@@ -84,7 +84,7 @@
 						</div>
 						<div class="form-group">
 							<label for="txt_image">*Photo</label>
-							<input type="file" name="txt_image" size="20"  />
+							<input type="file" name="userfile" size="20" multiple="true" />
 							<!--<input class="form-control" placeholder="Photo" name="txt_photo" type="text" value="">-->
 						</div>
 					</div>	
@@ -99,7 +99,7 @@
 
 <script type="text/javascript">
  $(document).ready(function() {
-	$('#id_frm').submit(function(){
+	 $('#id_frm').submit(function(){
 		$.post($('#id_frm').attr('action'), $('#id_frm').serialize(), function( data ) {
 			if(data.st == 0)
 			{
@@ -107,11 +107,11 @@
 			}
 			if(data.st == 1)
 			{
-				window.location.href='patients/index';
+				window.location.href='appointment/index';
 			}
 		}, 'json');
-		return false;			
+		return false;		
 	});
 });  
-</script>
+</script> 
 	
