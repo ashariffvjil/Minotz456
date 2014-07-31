@@ -39,7 +39,7 @@ $(document).ready(function() {
 				data: data.modules_name,
 				});*/
 				
-				window.location.href='module/configurator.html';//?data='+data.modules_name;
+				window.location.href='configurator.html';//?data='+data.modules_name;
 			}
 		}, 'json');
 		return false;			

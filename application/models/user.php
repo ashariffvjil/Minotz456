@@ -1,9 +1,7 @@
 <?php
 class user extends CI_Model
 	{
-	
-	 
-	 
+		 
 	 function password_encrypt($password)
 	 {
 	 $salt=rand(9999,99999);
@@ -12,12 +10,16 @@ class user extends CI_Model
 	 return $pwd.':'.$salt;
 	 }
 	 
-	  function password_decrypt($password,$salt)
+	 function password_decrypt($password,$salt)
 	 {
 	 $str=$password.$salt;
 	 $pwd=do_hash($str, 'md5');
 	 return $pwd.':'.$salt;
 	 }
+	 function rand_password( $length = 8, $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' ) 
+	 {
+     return substr( str_shuffle( $chars ), 0, $length );
+ 	 }
 	 function getCountries()
         {
             $query = $this->db->query('call getCountries()');
@@ -60,9 +62,14 @@ class user extends CI_Model
 	     return $result;
 	   
 	 }
-	 function signup($first_name,$last_name,$country_id,$zipcode,$occupation_id,$username,$email,$password)
+	 
+	 function signup($first_name,$last_name,$country_id,$zipcode,$occupation_id,$username,$email,$password,$user_role)
 	 {
 	   $password=$this->password_encrypt($password);
+	   
+	   if($first_name==''&&$last_name==''&&$country_id==''&&$zipcode==''&&$occupation_id==''&&$username==''&&$email==''&&$password)
+	    return array('st'=>0, 'msg' =>'Invalid Details');
+	   
 	   
 	    $queryEmail =  $this->db->query("call getUserdetailsByEmail('".$email."')");
 	   $this->db->reconnect();
@@ -80,7 +87,9 @@ class user extends CI_Model
 	    $result= array('st'=>0, 'msg' =>'Username Already Exists');
 		 return $result;
 	   }
-	   $query =  $this->db->query("call saveUser('".$first_name."','".$last_name."','".$country_id."','".$zipcode."','".$occupation_id."','".$username."','".$email."','".$password."')");
+	   $flag=0;
+	
+	   $query =  $this->db->query("call saveUser('".$first_name."','".$last_name."','".$country_id."','".$zipcode."','".$occupation_id."','".$username."','".$email."','".$password."','".$user_role."')");
 	 	
 		   if($query->num_rows() == 1)
 		   {
@@ -88,9 +97,29 @@ class user extends CI_Model
 			 $this->session->set_userdata($query->result_array());
 			  return array('st'=>1, 'msg' =>'Submit Sucessfully');
 		   }
+		   else
+		   {
+		      return array('st'=>0, 'msg' =>'Invalid Details');
+		   }
 	
 	  
 	 }
 	 
+	function getAppointments($docUserID)
+		{ 
+		
+		 $query =  $this->db->query("CALL getAppointments('".$docUserID."')");
+		 return $query->result_array();
+		} 
+	function forgotPassword($email)
+	    {
+		  $query = $this->db->query("CALL forgotPassword('".$email."')");
+		  return $query->result_array();
+	    }
+	function getDemographicsInfo($patientID) 
+		{
+		  $query=$this->db->query("CALL getDemographicsInfo('".$patientID."')");
+		  return $query->result_array();
+	  	} 
 	}
 	?>

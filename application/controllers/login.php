@@ -111,7 +111,7 @@ class Login extends CI_Controller {
 			$zipcode = $this->input->post('zipcode');
 			$occupation_id = $this->input->post('occupation_id');
 			
-			$result=$this->user->signup($first_name,$last_name,$country_id,$zipcode,$occupation_id,$username,$email,$password);
+			$result=$this->user->signup($first_name,$last_name,$country_id,$zipcode,$occupation_id,$username,$email,$password,5);
 			if($result) 
 			{
 			echo json_encode($result);

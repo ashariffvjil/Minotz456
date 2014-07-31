@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php // if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
@@ -50,7 +50,7 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';//minotz
-$db['default']['password'] = '';//Min@#123
+$db['default']['password'] = 'vjwamp@14';//Min@#123
 $db['default']['database'] = 'minotz';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

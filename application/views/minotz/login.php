@@ -14,10 +14,10 @@
 
 
                     <div class="panel-body">
-                      <?php print_r($_SESSION); echo form_open('login/check', array('id'=>'frm')); ?>
+                      <?php print_r($_SESSION); echo form_open('webservices/index/signin', array('id'=>'frm')); ?>
                             <fieldset>
                                 <div class="form-group">
-                                 <input class="form-control" placeholder="User name" name="username" type="text" value="<?php if(isset($_COOKIE['username'])) echo $_COOKIE['username']; ?>" autofocus="on" autocomplete="off" autocapitalize="off" autocorrect="off">
+                                 <input class="form-control" placeholder="User name" name="username" type="text" value="<?php if(isset($_COOKIE['username'])) echo $_COOKIE['username']; ?>" autofocus="">
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Password" name="password" type="password" value="">
@@ -36,7 +36,7 @@
             </div>
         </div>
 	<script type="text/javascript">
-		$(document).ready(function() {
+	/*	$(document).ready(function() {
 $('#frm').submit(function(){
 	
 	$.post($('#frm').attr('action'), $('#frm').serialize(), function( data ) {
@@ -55,5 +55,5 @@ $('#frm').submit(function(){
    });
 
 	
-});
+});*/
 </script>

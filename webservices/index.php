@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 require_once("lib/nusoap.php");
 require_once("lib/class.db.php");
 
@@ -14,19 +15,15 @@ $server->wsdl->schemaTargetNamespace = $namespace;
 //Register a Registration method that has parameters and return types
 $server->register('Minotz.registration', 	
                 // parameter list:
-                array(   'name'=>'xsd:string',
-						 'image'=>'xsd:string', 
-						 'street'=>'xsd:string',
-						 'province'=>'xsd:string',
-						 'town'=>'xsd:string',
-						 'pincode'=>'xsd:int',
-						 'mobilenumber'=>'xsd:string',
-						 'emailid'=>'xsd:string',
-						 'password'=>'xsd:string',
-						 'somethingaboutmyself'=>'xsd:string',
-						 'user_id'=>'xsd:int'
-					 ),
-                // return value(s):
+                array(   'first_name'=>'xsd:string',
+						 'last_name'=>'xsd:string',
+						 'country_id'=>'xsd:string',
+						 'zipcode'=>'xsd:string',
+						 'occupation_id'=>'xsd:string',
+						 'username'=>'xsd:string',
+						 'email'=>'xsd:string',
+						 'password'=>'xsd:string'),
+			// return value(s):
                 array('return'=>'xsd:string'),
                 // namespace:
                 $namespace,
@@ -41,10 +38,11 @@ $server->register('Minotz.registration',
 
 //Registartion Method End method
 
-//Register a Get Profile method that has parameters and return types
-$server->register('Minotz.get_profile', 	
+//Register a Signin method that has parameters and return types
+$server->register('Minotz.signin', 	
                 // parameter list:
-                array('user_id'=>'xsd:int' ),
+                array('email'=>'xsd:string',
+				      'password'=>'xsd:string'),
                 // return value(s):
                 array('return'=>'xsd:string'),
                 // namespace:
@@ -56,13 +54,13 @@ $server->register('Minotz.get_profile',
                 // use: encoded or literal
                 'encoded',
                 // description: documentation for the method
-                'Minotz  Get Profile  Method Parameters');
-//Get Profile Method End method
+                'Minotz  Signin  Method Parameters');
+//Signin Method End method
 
-//Register a Get Profile method that has parameters and return types
-$server->register('Minotz.get_user_details', 	
+//Register a forgot password method that has parameters and return types
+$server->register('Minotz.forgot-password', 	
                 // parameter list:
-                array('user_id'=>'xsd:int' ),
+                array('email'=>'xsd:string'),
                 // return value(s):
                 array('return'=>'xsd:string'),
                 // namespace:
@@ -74,27 +72,13 @@ $server->register('Minotz.get_user_details',
                 // use: encoded or literal
                 'encoded',
                 // description: documentation for the method
-                'Minotz  Get Personal Details  Method Parameters');
-//Get Profile Method End method
+                'Minotz  forgot password  Method Parameters');
+//forgot password Method Ends
 
-		
-
-
-//Register a Post Task method that has parameters and return types
-$server->register('Minotz.post_task', 	
-                // parameter list:
-                array(   'user_id'=>'xsd:int',
-						 'task_name'=>'xsd:string',
-						 'image'=>'xsd:string', 
-						 'task_amount'=>'xsd:string',
-						 'expiry'=>'xsd:string',
-						 'proxmity'=>'xsd:string',
-						 'task_destination'=>'xsd:string',
-						 'payment_type'=>'xsd:string',
-						 'task_description'=>'xsd:string',
-						 'share_number'=>'xsd:string',
-						 'task_id'=>'xsd:int'
-					 ),
+//Register a InboxView method that has parameters and return types
+$server->register('Minotz.inboxview',
+                  // parameter list:
+                array('users_id'=>'xsd:string'),
                 // return value(s):
                 array('return'=>'xsd:string'),
                 // namespace:
@@ -106,14 +90,14 @@ $server->register('Minotz.post_task',
                 // use: encoded or literal
                 'encoded',
                 // description: documentation for the method
-                'Minotz Post Task Method Parameters');
+                'Minotz  InboxView  Method Parameters');
+//InboxView Method End method
 
-//Post Task Method End method
-
-//Register a Get Task  method that has parameters and return types
-$server->register('Minotz.get_task_details', 	
-                // parameter list:
-                array('task_id'=>'xsd:int' ),
+//Register a filter by date InboxView method that has parameters and return types
+$server->register('Minotz.inboxbydate',
+                  // parameter list:
+                array('users_id'=>'xsd:string',
+				      'date'=>'xsd:string'),
                 // return value(s):
                 array('return'=>'xsd:string'),
                 // namespace:
@@ -125,13 +109,15 @@ $server->register('Minotz.get_task_details',
                 // use: encoded or literal
                 'encoded',
                 // description: documentation for the method
-                'Minotz  Get Task  Method Parameters');
-//Get Task   Method End method
+                'Minotz  InboxView by date Method Parameters');
+//Register a filter by date InboxView method Ends
 
-//Register a Delete Task  method that has parameters and return types
-$server->register('Minotz.delete_task', 	
-                // parameter list:
-                array('task_id'=>'xsd:int' ),
+//Register a filter by name or id InboxView method that has parameters and return types
+$server->register('Minotz.inboxbyname',
+                  // parameter list:
+                array('users_id'=>'xsd:string',
+				      'patientname'=>'xsd:string',
+					  'patientid'=>'xsd:string'),
                 // return value(s):
                 array('return'=>'xsd:string'),
                 // namespace:
@@ -143,153 +129,27 @@ $server->register('Minotz.delete_task',
                 // use: encoded or literal
                 'encoded',
                 // description: documentation for the method
-                'Minotz  delete Task  Method Parameters');
-//Delete Task   Method End method
+                'Minotz  InboxView by Name Method Parameters');
+//Register a filter by name or id InboxView method Ends
 
-//Register a Get Task List method that has parameters and return types
-$server->register('Minotz.get_task_history', 	
-                // parameter list:
-                array('user_id'=>'xsd:int',
-				  'flag'=>'xsd:int'),
-                // return value(s):
-                array('return'=>'xsd:string'),
-                // namespace:
-                $namespace,
-                // soapaction: (use default)
-                false,
-                // style: rpc or document
-                'rpc',
-                // use: encoded or literal
-                'encoded',
-                // description: documentation for the method
-                'Minotz  Get Task Lists  Method Parameters');
-//Get Task  List Method End method
-
-//Register a  Bid on Task method that has parameters and return types
-$server->register('Minotz.bid_on_task', 	
-                // parameter list:
-               	 array( 'user_id'=>'xsd:int',
-						'bid_amount'=>'xsd:string', 
-						'task_id'=>'xsd:int',
-						'allow_contact'=>'xsd:int',
-						'distance'=>'xsd:int'),
-                // return value(s):
-                array('return'=>'xsd:string'),
-                // namespace:
-                $namespace,
-                // soapaction: (use default)
-                false,
-                // style: rpc or document
-                'rpc',
-                // use: encoded or literal
-                'encoded',
-                // description: documentation for the method
-                'Minotz  Add to Favorites  Method Parameters');
-
-//Get Bid Details by Bid id   End method
-
-$server->register('Minotz.get_bid_details', 	
-                // parameter list:
-               	 array('bid_id'=>'xsd:int'),
-                // return value(s):
-                array('return'=>'xsd:string'),
-                // namespace:
-                $namespace,
-                // soapaction: (use default)
-                false,
-                // style: rpc or document
-                'rpc',
-                // use: encoded or literal
-                'encoded',
-                // description: documentation for the method
-                'Minotz  Bid Details  Method Parameters');
-
-//Get Bid Details by Bid id  Methods Ends 			
-
-
-$server->register('Minotz.get_bid_list', 	
-                // parameter list:
-               	 array('task_id'=>'xsd:int'),
-                // return value(s):
-                array('return'=>'xsd:string'),
-                // namespace:
-                $namespace,
-                // soapaction: (use default)
-                false,
-                // style: rpc or document
-                'rpc',
-                // use: encoded or literal
-                'encoded',
-                // description: documentation for the method
-                'Minotz  Bid list  Method Parameters');
-
-//Get Bid Details by Bid id  Methods Ends 			
-
-//Get Bid Details by Task id and Consumer  id End method
-
-$server->register('Minotz.get_bid_by_task_n_consumer', 	
-                // parameter list:
-               	 array('task_id'=>'xsd:int',
-				 	   'consumer_id'=>'xsd:int'),
-                // return value(s):
-                array('return'=>'xsd:string'),
-                // namespace:
-                $namespace,
-                // soapaction: (use default)
-                false,
-                // style: rpc or document
-                'rpc',
-                // use: encoded or literal
-                'encoded',
-                // description: documentation for the method
-                'Minotz  Add to Favorites  Method Parameters');
-
-//Get Bid Details by Bid id  Methods Ends 						
-				
-//Register a Review method that has parameters and return types
-$server->register('Minotz.post_review', 	
-                // parameter list:
-                array(   'user_id'=>'xsd:int',
-						 'task_id'=>'xsd:int',
-						 'provider_id'=>'xsd:int', 
-						 'description'=>'xsd:string',
-						 'rating'=>'xsd:float'	 ),
-                // return value(s):
-                array('return'=>'xsd:string'),
-                // namespace:
-                $namespace,
-                // soapaction: (use default)
-                false,
-                // style: rpc or document
-                'rpc',
-                // use: encoded or literal
-                'encoded',
-                // description: documentation for the method
-                'Minotz  Post Review  Method Parameters');
-
-//Post Review  Method End method
-
-//Register a  Add to Favorites method that has parameters and return types
-$server->register('Minotz.add_to_favorites', 	
-                // parameter list:
-               	 array('user_id'=>'xsd:int',
-						'provider_id'=>'xsd:int', 
-						 'task_id'=>'xsd:int'),
-                // return value(s):
-                array('return'=>'xsd:string'),
-                // namespace:
-                $namespace,
-                // soapaction: (use default)
-                false,
-                // style: rpc or document
-                'rpc',
-                // use: encoded or literal
-                'encoded',
-                // description: documentation for the method
-                'Minotz  Add to Favorites  Method Parameters');
-
-//Add to Favorites  Method End method
-
+//Register a Demographics method that has parameters and return types
+$server->register('Minotz.demographics',
+                  // parameter list:
+				  array('patient_id'=>'xsd:string'),
+				  //return values
+				  array('return'=>'xsd:string'),
+				  //namespaces:
+				  $namespace,
+				  //soapaction: (use default)
+				  false,
+				  //style: rpc or document
+				  'rpc',
+				  //use: encoded or literal
+				  'encoded',
+				  //description: documentation for the method
+				  'Minotz Delete Patient by Id Method Parameter');
+//Register a Demographics method ends				  
+				   		
 
 // Get our posted data if the service is being consumed
 // otherwise leave this data blank.                
@@ -297,7 +157,6 @@ $POST_DATA = isset($GLOBALS['HTTP_RAW_POST_DATA'])
               ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
 
 // pass our posted data (or nothing) to the soap service                    
-$server->service($POST_DATA);                
-exit();
-
+$server->service($POST_DATA); 
+exit;               
 ?>

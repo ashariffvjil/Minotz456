@@ -143,9 +143,7 @@ div.white		{color: #aaaaaa; background-color: #ffffff; border: 1px solid #dddddd
 .left		{float: left;}
 .right		{float: right;}
 /* below css used for configurator form */
-.textprop {	
-	width: 90px;
-	}
+.textprop {	width: 90px;}
 .panel-body1
 {
 /*	float:left; */

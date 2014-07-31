@@ -14,7 +14,15 @@
 | path to your installation.
 |
 */
+switch ($_SERVER['SERVER_ADDR']){
+case "172.27.2.107":
 $config['base_url']	= 'http://172.27.2.107/Minotz/';
+	break;
+case "122.183.99.56":
+$config['base_url']	= 'http://http://122.183.99.56/Minotz/';
+	break;	
+	}
+
 
 /*
 |--------------------------------------------------------------------------

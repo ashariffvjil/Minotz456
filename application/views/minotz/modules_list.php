@@ -10,15 +10,11 @@
 			 <?php echo form_open('module/newmodule', array('id'=>'frm','name'=>'frm')); ?>
 					<fieldset>
 						<div class="form-group">
-						
 							<?php 
 							//print_r($results);
 							foreach($results as $data):?>
 								<?php echo $data->modules_id?> - <?php echo $data->module_name?><br />
 								<?php endforeach;?>
-							
-							
-							
 						
 						</div>
 						
@@ -30,28 +26,4 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
-/* $(document).ready(function() {
-	$('#frm').submit(function(){
-		$.post($('#frm').attr('action'), $('#frm').serialize(), function( data ) {
-			if(data.st == 0)
-			{
-				$('#validation-error').html(data.msg).addClass('alert alert-danger');
-			}
-			if(data.st == 1)
-			{
-			//$.post( "module/configurator.html", { module_name: data.modules_name} );
-			$.ajax({
-				type: "POST",
-				url: 'configurator.html',
-				data: data.modules_name,
-				});
-				
-				window.location.href='module/configurator.html';//?data='+data.modules_name;
-			}
-		}, 'json');
-		return false;			
-	});
-});  */
-</script>
 	

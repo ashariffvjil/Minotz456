@@ -85,7 +85,7 @@ $('#frm').submit(function(){
 				
 		if(data.st == 1)
 		{
-		  window.location.href='login.html';
+		  window.location.href='<?php echo site_url('login');?>';
 		}
 				
 	}, 'json');

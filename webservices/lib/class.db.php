@@ -15,7 +15,8 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-  $mw = new MeekroDB(SERVER,USERNAME,PASSWORD,DATABASE);
+require ("../application/config/database.php");
+  $mw = new MeekroDB($db['default']['hostname'],$db['default']['username'],$db['default']['password'],$db['default']['database']);
 
 class DB {
   // initial connection

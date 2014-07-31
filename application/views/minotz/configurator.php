@@ -246,7 +246,7 @@ $("#properties").css('display',"none");
 <?php 
 //print_r($_COOKIE['modulename']);
 
-//$module_name=$_REQUEST['data'];
+$module_name='FORM';//$_REQUEST['data'];
 //var_dump($this->input->cookie('modulename'));
 //echo '----'. $cookieData = $this->input->get_cookie("modulename");
  ?>
