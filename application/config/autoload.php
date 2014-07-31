@@ -110,7 +110,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('user');
+$autoload['model'] = array('user','webservices','logxmodules','patients_models');
 
 
 /* End of file autoload.php */
