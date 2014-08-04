@@ -69,14 +69,14 @@ class Module extends CI_Controller {
 		}
 		else 
 		{
-			$module_name = $this->input->post('hid_modulename');
+			/*$module_name = $this->input->post('hid_modulename');
 			$modules_description = $this->input->post('txt_description');
 			$result=$this->logxmodules->savemodule($module_name,$modules_description);
 			if($result) 
 			{
 				echo json_encode($result);
 			}
-
+			*/
 		}
 	
 	

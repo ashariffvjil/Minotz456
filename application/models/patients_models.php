@@ -26,9 +26,9 @@ class patients_models extends CI_Model
 		$query = $this->db->query('call getlogx()');
 	    return $query->result();
 	}
-	function saveappointment($userid,$patient_name,$doctor_name,$logx_name,$doa,$note)
+	function saveappointment($userid,$patient_name,$doctor_name,$logx_name,$doa,$referred_by,$note)
 	{
-		$query =  $this->db->query("call saveAppointment('".$userid."','".$patient_name."','".$doctor_name."','".$logx_name."','".$doa."','".$note."')");
+		$query =  $this->db->query("call saveAppointment('".$userid."','".$patient_name."','".$doctor_name."','".$logx_name."','".$doa."','".$referred_by."','".$note."')");
 		if($query)
 		{
 			return array('st'=>1, 'msg' =>'Submit Sucessfully');

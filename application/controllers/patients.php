@@ -69,10 +69,10 @@ class Patients extends CI_Controller {
 			}
 			else
 			{
-				 $data = array('upload_data' => $this->upload->data());
+				$data = array('upload_data' => $this->upload->data());
 				//echo $data['upload_data']['full_path'];
 			}
-			if($data){
+			if($data!=''){
 				$first_name = $this->input->post('txt_firstname');
 				$last_name = $this->input->post('txt_lastname');
 				$dob=$this->input->post('birth_date_year').'-'.$this->input->post('birth_date_month').'-'.$this->input->post('birth_date_day');

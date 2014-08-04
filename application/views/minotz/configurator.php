@@ -20,6 +20,11 @@
 	<script src="<?php echo base_url() ?>js/jpicker/jquery-1.4.4.min.js" type="text/javascript"></script>
 	<script src="<?php echo base_url() ?>js/jpicker/jpicker-1.1.6.min.js" type="text/javascript"></script> ---------->
 <!--------End color picker ---------->
+<style>
+@media screen {
+	.page_break	{ height:10px; background:url(page-break.gif) 0 center repeat-x; border-top:1px dotted #999; margin-bottom:13px; }
+}	
+</style>
 <script type="text/javascript">
 	//Json function
 	function json_encode(e){var t,n=this.window.JSON;try{if(typeof n==="object"&&typeof n.stringify==="function"){t=n.stringify(e);if(t===undefined){throw new SyntaxError("json_encode")}return t}var r=e;var i=function(e){var t=/[\\\"\u0000-\u001f\u007f-\u009f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;var n={"\b":"\\b","	":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"};t.lastIndex=0;return t.test(e)?'"'+e.replace(t,function(e){var t=n[e];return typeof t==="string"?t:"\\u"+("0000"+e.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+e+'"'};var s=function(e,t){var n="";var r="    ";var o=0;var u="";var a="";var f=0;var l=n;var c=[];var h=t[e];if(h&&typeof h==="object"&&typeof h.toJSON==="function"){h=h.toJSON(e)}switch(typeof h){case"string":return i(h);case"number":return isFinite(h)?String(h):"null";case"boolean":case"null":return String(h);case"object":if(!h){return"null"}if(this.PHPJS_Resource&&h instanceof this.PHPJS_Resource||window.PHPJS_Resource&&h instanceof window.PHPJS_Resource){throw new SyntaxError("json_encode")}n+=r;c=[];if(Object.prototype.toString.apply(h)==="[object Array]"){f=h.length;for(o=0;o<f;o+=1){c[o]=s(o,h)||"null"}a=c.length===0?"[]":n?"[\n"+n+c.join(",\n"+n)+"\n"+l+"]":"["+c.join(",")+"]";n=l;return a}for(u in h){if(Object.hasOwnProperty.call(h,u)){a=s(u,h);if(a){c.push(i(u)+(n?": ":":")+a)}}}a=c.length===0?"{}":n?"{\n"+n+c.join(",\n"+n)+"\n"+l+"}":"{"+c.join(",")+"}";n=l;return a;case"undefined":case"function":default:throw new SyntaxError("json_encode")}};return s("",{"":r})}catch(o){if(!(o instanceof SyntaxError)){throw new Error("Unexpected error type in json_encode()")}this.php_js=this.php_js||{};this.php_js.last_error_json=4;return null}}
@@ -32,7 +37,7 @@
 		if(total_elements!='[]'){
 			document.getElementById('id_description').value = total_elements;
 			document.getElementById('val').innerHTML = total_elements;
-			}
+		}
 	}
 	//STORING ALL CONTROLS/ELEMENTS ATTRIBUTES IN A JSON
 	function fillArray(e1,a1)
@@ -47,7 +52,11 @@
 			var placeholder=$('#'+e1[i].id).attr('placeholder');
 			var readonly_status=$('#'+e1[i].id).attr('readonly');
 			var required_status=$('#'+e1[i].id).attr('required');
-			a1.push({'id' : e1[i].id,'type' : e1[i].type, 'name':e1[i].name,'value':e1[i].val,'attribute':{'leftposition':leftposition,'topposition':topposition,'element_width':element_width,'element_height':element_height,'placeholder':placeholder,'required':required_status,'readonly':readonly_status}});
+			
+			var maxlength=$('#'+e1[i].id).attr('maxlength');
+			var minlength=$('#'+e1[i].id).attr('minlength');
+			//var maxdate=$('#'+e1[i].id).attr('minlength');
+			a1.push({'id' : e1[i].id,'type' : e1[i].type, 'name':e1[i].name,'value':e1[i].val,'attribute':{'leftposition':leftposition,'topposition':topposition,'element_width':element_width,'element_height':element_height,'placeholder':placeholder,'required':required_status,'readonly':readonly_status,'maxlength':maxlength,'minlength':minlength}});
 		}
 		var resultset=json_encode(a1);
 		return resultset;
@@ -75,7 +84,8 @@ $("#properties").css('display',"none");
         accept: ":not(.ui-sortable-helper)",
         drop: function (event, ui) {
 			
-			$("#properties").css('display',"");
+			//$("#properties").css('display',"");
+			//gettextbox_properties(this,ui.draggable.text());
 			var curr_elementid=document.activeElement.id;
 		    var currentelement=document.activeElement.type;
 			var currentobj=(currentelement=='' || currentelement==undefined )?ui.draggable.text().toLowerCase():currentelement;
@@ -117,7 +127,7 @@ $("#properties").css('display',"none");
 			}
 			// ADDING A RADIO BUTTION DYNAMICALLY AT RUN TIME
 			else if(ui.draggable.text()=='Radio button'){
-				var $ctrl = $('<input/>').attr({ type: 'radio',id:'id_rdo_'+k, name:'radio_'+k,onblur:'gettextbox_properties(this,"Radio-buttons")'}).addClass("rad");
+				var $ctrl = $('<input/>').attr({ type: 'radio',id:'id_rdo_'+k, name:'radio_buttons',onblur:'gettextbox_properties(this,"Radio-buttons")'}).addClass("rad");
 				$(this).append($ctrl);
 				$("#id_rdo_"+k).draggable({ containment: ".panel-body1",
 				    drag: function(){
@@ -196,8 +206,8 @@ $("#properties").css('display',"none");
 			else if(ui.draggable.text()=='Page break'){
 				var $ctrl=$('<hr/>').attr({id:'id_pagebrk_'+r,name:'pagebreak_'+r,onblur:'gettextbox_properties(this,"Pagebreak")'}).addClass("page_break");
 				$(this).append($ctrl);
-				$(".page_break").css('background-color','blue');
-				$(".page_break").height(2);
+				//$(".page_break").css('background-color','blue');
+				//$(".page_break").height(2);
 				$("#id_pagebrk_"+r).draggable({ containment: ".panel-body1",
 				    drag: function(){
 						gettextbox_properties(this,'Pagebreak');
@@ -210,7 +220,7 @@ $("#properties").css('display',"none");
 			else if(ui.draggable.text()=='Line'){
 			var $ctrl=$('<hr />').attr({id:'id_line_'+s, name:'line_'+s,onblur:'gettextbox_properties(this,"line")'}).addClass("line");
 				$(this).append($ctrl);
-				$(".line").css('background-color','red');
+				$(".line").css('background-color','block');
 				$(".line").width(200).height(2);
 				$("#id_line_"+s).draggable({ containment: ".panel-body1",
 				     drag: function(){
@@ -245,8 +255,18 @@ $("#properties").css('display',"none");
 			}
 			else if(ui.draggable.text()=='Date'){
 				var $ctrl = $('<input/>').attr({ type: 'text', id:'id_textdate_'+v, name:'textdate_'+v, placeholder:'Calender'+v,onblur:'gettextbox_properties(this,"Date")'}).addClass("date");
+				//var $ctrl = $('<input/>').attr({ type: 'date', id:'id_date_'+v, name:'date_'+v, placeholder:'Date'+v,onblur:'gettextbox_properties(this,"Date")'}).addClass("date");
 				$(this).append($ctrl);
-				$("#id_textdate_"+v).datepicker({ dateFormat: 'dd/mm/yy' });
+				//$("#id_textdate_"+v).datepicker({ dateFormat: 'dd/mm/yy' });
+				 var date=$.datepicker.formatDate('dd/mm/yy', new Date())
+				$("#id_textdate_"+v).datepicker({ 
+					minDate: date, 
+					maxDate: $.datepicker.formatDate('mm/dd/yy',new Date($("#id_maxdate").val())), 
+					dateFormat: "dd/mm/yy", 
+					//defaultDate: "+1w", 
+					changeMonth: true, 
+					numberOfMonths: 1 
+				}); 
 				$("#id_textdate_"+v).draggable({ containment: ".panel-body1",
 				    drag: function(){
 						gettextbox_properties(this,'Date');
@@ -255,10 +275,11 @@ $("#properties").css('display',"none");
 				v++;
 			}
 			else if(ui.draggable.text()=='Time'){
-				var $ctrl = $('<input/>').attr({ type: 'text', id:'id_texttime_'+w, name:'texttime_'+w, placeholder:'time'+w, onblur:'gettextbox_properties(this,"Time")'}).addClass("time");
+				//var $ctrl = $('<input/>').attr({ type: 'text', id:'id_texttime_'+w, name:'texttime_'+w, placeholder:'time'+w, onblur:'gettextbox_properties(this,"Time")'}).addClass("time");
+				var $ctrl = $('<input/>').attr({ type: 'time', id:'id_time_'+w, name:'time_'+w, placeholder:'time'+w, onblur:'gettextbox_properties(this,"Time")'}).addClass("time");
 				$(this).append($ctrl);
-				$('#id_texttime_'+w).timepicker({ 'scrollDefault': 'now' });
-				$("#id_texttime_"+w).draggable({ containment: ".panel-body1",
+				//$('#id_texttime_'+w).timepicker({ 'scrollDefault': 'now' });
+				$("#id_time_"+w).draggable({ containment: ".panel-body1",
 				    drag: function(){
 						gettextbox_properties(this,'Time');
 					},
@@ -427,7 +448,7 @@ $module_name='FORM';//$_REQUEST['data'];
 								</tr>
 								<tr id="trid_maxdate">
 									<td>Max Date</td>
-									<td><input type='text' name='txt_maxdate' id='id_maxdate' class='textprop' placeholder='Max date' maxlength='10' onchange='setdisabled_dates(this,"id_cid")'></td>
+									<td><input type='text' name='txt_maxdate' id='id_maxdate' class='textprop' placeholder='Max date' maxlength='10' onchange='setmax_date(this,"id_cid")'></td>
 								</tr>
 								<tr id="trid_mintime">
 									<td>Min Time</td>
@@ -444,9 +465,13 @@ $module_name='FORM';//$_REQUEST['data'];
 								<tr id="trid_image">
 									<td>Image</td>
 									<td><input type='file' name='txt_image' id='fileupload' >
-										<div id="files" class="files">
+										<div id="files" class="files"></div>
 									</td>
-								</tr></div>
+								</tr>
+								<tr id="trid_entries">
+									<td>Entries</td>
+									<td><textarea name='txt_entries' id='id_entries' class='textprop' onchange='setaddoptions(this,"id_cid")' ></textarea></td>
+								</tr>
 							</table>
 						</div>
 					</div>
@@ -463,7 +488,6 @@ $module_name='FORM';//$_REQUEST['data'];
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#frm').submit(function(){
-	//alert('ssssssssss');
 		$.post($('#frm').attr('action'), $('#frm').serialize(), function( data ) {
 			if(data.st == 0)
 			{
@@ -476,7 +500,18 @@ $(document).ready(function() {
 		}, 'json');
 		return false;			
 	});
-}); 
+
+$("#id_maxdate").datepicker({
+        minDate: 0,
+        onSelect: function(theDate) {
+            $("#dataEnd").datepicker('option', 'mindate', new Date());
+        },
+        beforeShow: function() {
+            $('#ui-datepicker-div').css('z-index', 9999);
+        },
+        dateFormat:'dd/mm/yy'
+    });
+});
 $(function () {
     'use strict';
     // Change this to the location of your server-side upload handler:

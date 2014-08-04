@@ -110,7 +110,7 @@
 				window.location.href='appointment/index';
 			}
 		}, 'json');
-		return false;		
+		//return false;		
 	});
 });  
 </script> 

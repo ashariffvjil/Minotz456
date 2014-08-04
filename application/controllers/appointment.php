@@ -39,7 +39,7 @@ class Appointment extends CI_Controller {
 		$this->form_validation->set_rules('logx_name', 'Logx Name', 'required');
 		$this->form_validation->set_rules('txt_doa', 'Date of Appointment', 'required');
 		//$this->form_validation->set_rules('txt_toahh', 'Appointment Time', 'required');
-		$this->form_validation->set_rules('txt_userid', 'Appointment Created By', 'required');
+		$this->form_validation->set_rules('txt_referred', 'Referred By', 'required');
 		
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -51,12 +51,14 @@ class Appointment extends CI_Controller {
 			$doctor_name = $this->input->post('doctor_name');
 			$logx_name=$this->input->post('logx_name');
 			$doa=$this->input->post('txt_doa');
-			
-			$userid=$this->input->post('txt_userid');
+			$doa_db=$this->input->post('txt_doa_db');
+			$user=$this->session->userdata('user');
+			$userid=$user['userid'];
+			$referred_by=$this->input->post('txt_referred');
 			$note=$this->input->post('txt_note');
 			//$userid=$user['userid'];
 			//$userid='3';
-			$result=$this->patients_models->saveappointment($userid,$patient_name,$doctor_name,$logx_name,$doa,$note);
+			$result=$this->patients_models->saveappointment($userid,$patient_name,$doctor_name,$logx_name,$doa_db,$referred_by,$note);
 			if($result) 
 			{
 				echo json_encode($result);

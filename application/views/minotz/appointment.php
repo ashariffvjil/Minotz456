@@ -24,7 +24,7 @@
 						
 							<label for="doctor_name">*Doctor Name</label>
                                  <?php  $arr_doctors['']='Select Doctor';
-								 foreach($doctors as $row )    $arr_doctors[$row->users_profile_id] = $row->first_name;
+								 foreach($doctors as $row )    $arr_doctors[$row->user_profile_id] = $row->first_name;
            						 echo form_dropdown('doctor_name',  $arr_doctors,'','class="form-control"');?>
 						</div>
 						<div class="form-group">
@@ -36,17 +36,22 @@
 					</div>
 					<div class="col-md-6 col-xs-12"> 
 						<div class="form-group">
-							<label for="txt_doa">*Date of Appointment</label><br>
-							<input class="form-control" placeholder="Date of Appointment" name="txt_doa" id="id_doa" type="text" value="">
+							<button  class="btn btn-lg btn-primary btn-block" onclick="window.location.href='patients/index'">Create Patient</button>
+							
 						</div>
 						<div class="form-group">
-							<label for="txt_userid">*Appointment Created By</label>
-							<input class="form-control" placeholder="Appointment Created By" name="txt_userid" type="text" value="">
+							<label for="txt_doa">*Date of Appointment</label><br>
+							<input class="form-control" placeholder="Date of Appointment" name="txt_doa" id="id_doa" type="text" value="">
+							<input class="form-control" name="txt_doa_db" id="id_doa_db" type="hidden" value="">
+						</div>
+						<div class="form-group">
+							<label for="txt_referred">*Referred By</label>
+							<input class="form-control" placeholder="Referred By" name="txt_referred" type="text" value="">
 						</div>
 					</div>
 					<div class="form-group">
 							<label for="txt_note">*Note</label>
-							<input class="form-control" placeholder="Note" name="txt_note" type="text" value="">
+							<textarea class="form-control" placeholder="Note" name="txt_note" value=""></textarea>
 					</div>
 						<!-- Change this to a button or input when using this as a form -->
 						<button  type="submit" class="btn btn-lg btn-primary btn-block">Create Appointment</button>
@@ -68,7 +73,9 @@
         beforeShow: function() {
             $('#ui-datepicker-div').css('z-index', 9999);
         },
-        dateFormat:'d MM, yy'
+        dateFormat:'d MM, yy',
+		altField: "#id_doa_db",
+        altFormat: "yy-mm-dd" 
     });
 });
  $(document).ready(function() {

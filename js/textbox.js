@@ -1,5 +1,6 @@
 function gettextbox_properties(obj,type)
 {
+	$("#properties").css('display',"");
 	var id=obj.id;
 	var name=obj.name;
 	var cntrl_type=obj.type;
@@ -16,10 +17,10 @@ function gettextbox_properties(obj,type)
 	var caption=$('#'+id).html();
 	var placeholder_val=$('#'+id).attr('placeholder'); 
 	
-	//$('#trid_leftpos').hide();
-	//$('#trid_toppos').hide();
-	//$('#trid_width').hide();
-	//$('#trid_height').hide();
+	/*$('#trid_leftpos').hide();
+	$('#trid_toppos').hide();
+	$('#trid_width').hide();
+	$('#trid_height').hide();*/
 	
 	$('#trid_required').hide();
 	$('#trid_name').hide();
@@ -33,9 +34,12 @@ function gettextbox_properties(obj,type)
 	$('#trid_mintime').hide();
 	$('#trid_maxtime').hide();
 	$('#trid_maxdate').hide();
+	$('#trid_image').hide();
+	$('#trid_entries').hide();
 	
 	if(type=='header')
 	{
+
 		$('#tdid_type').text(type);
 		$('#id_tposition').val(parseInt(top_pos));
 		$('#id_lposition').val(parseInt(left_pos));
@@ -70,7 +74,7 @@ function gettextbox_properties(obj,type)
 		$('#trid_placeholder').show();
 		$('#trid_readonly').show();
 		$('#trid_required').show();
-		$('#trid_multiline').show();
+		
 		$('#trid_maxlength').show();
 		$('#trid_minlength').show();
 	}
@@ -95,6 +99,7 @@ function gettextbox_properties(obj,type)
 		$('#id_cid').text(id);
 		$('#id_caption').val(caption);
 		$('#trid_required').show();
+		$('#trid_entries').show();
 		//$('#trid_name').show();
 		//$('#id_fname').val(name);
 	}
@@ -108,6 +113,7 @@ function gettextbox_properties(obj,type)
 		$('#id_cid').text(id);
 		$('#id_caption').val(caption);
 		$('#trid_required').show();
+		$('#trid_entries').show();
 	}
 	else if(type=='sketch')
 	{
@@ -139,6 +145,7 @@ function gettextbox_properties(obj,type)
 		$('#id_width').val(ele_width);
 		$('#id_height').val(ele_height);
 		$('#id_cid').text(id);
+		$('#id_placeholder').val(placeholder_val);  
 		$('#id_caption').val(caption);
 		$('#trid_required').show();
 		$('#trid_placeholder').show();
@@ -168,19 +175,27 @@ function gettextbox_properties(obj,type)
 		$('#id_cid').text(id);
 		$('#id_caption').val(caption);
 		$('#trid_required').show();
+		$('#trid_image').show();
+		
+	}
+	else if(type=='Line')
+	{
+		$('#tdid_type').text(type);
+		$('#id_tposition').val(parseInt(top_pos));
+		$('#id_lposition').val(parseInt(left_pos));
+		$('#id_width').val(ele_width);
+		$('#id_height').val(ele_height);
+		$('#id_cid').text(id);
+		
 		
 		
 	}
-	else {
+	/*else {
 	
 	if(type=='text')
 		$('#trid_placeholder').show();
 	else
 		$('#trid_placeholder').hide();
-		
-		//alert(type+'----------'+cntrl_type);
-	
-     
 	if ( $('#'+id).is('[readonly]') ) {
 		$('#rdo_readonlyS').prop("checked",true); 
 	}else{ $('#rdo_readonlyN').prop("checked",true);  }
@@ -195,7 +210,7 @@ function gettextbox_properties(obj,type)
 	$('#id_cid').text(id);
 	$('#id_placeholder').val(placeholder_val);  
 	$('#id_caption').val(caption);
-	}
+	} */
 }
 function setposition(top,left,id_cid,width,height)
 {
@@ -320,14 +335,20 @@ function getrequired(obj,id_cid)
 		$('#'+act_id).removeAttr('required');
 	}
 }
-function setdisabled_dates(obj,id_cid)
+function setmax_date(obj,id_cid)
 {
 	var act_id=document.getElementById(id_cid).innerHTML;
 	var val=obj.value;
-	
-	//$('#'+act_id).datepicker({ maxDate: new Date, minDate: new Date(2014, 7, 30) });
-	$('#'+act_id).datepicker({dateFormat: 'dd/mm/yy', minDate:(0), maxDate:(1)});
-	//$('#'+act_id).datepicker({minDate: val});
+	//$('#'+act_id).setAttribute('maxDate', val);
+	var date=$.datepicker.formatDate('dd/mm/yy', new Date())
+	$("#"+act_id).datepicker({ 
+					minDate: date, 
+					maxDate: $.datepicker.formatDate('mm/dd/yy',new Date(val)), 
+					dateFormat: "dd/mm/yy", 
+					//defaultDate: "+1w", 
+					changeMonth: true, 
+					numberOfMonths: 1 
+				}); 
 
 }
 function getuploadimg(obj,id_cid)
@@ -346,4 +367,13 @@ function getuploadimg(obj,id_cid)
     }).prop('disabled', !$.support.fileInput)
         .parent().addClass($.support.fileInput ? undefined : 'disabled');
 
+}
+function setaddoptions(obj,id_cid){
+	var act_id=document.getElementById(id_cid).innerHTML;
+	var res=obj.value.split(' ');
+	var TheOptions="<option value=''>Select</option>";
+	res.forEach(function(entry) {
+		TheOptions += "<option value='"+entry.trim()+"'>"+entry.trim()+"</option>";
+	});
+	$('#'+act_id).html(TheOptions);
 }
