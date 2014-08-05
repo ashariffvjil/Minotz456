@@ -30,14 +30,6 @@ class Module extends CI_Controller {
 	{
 		$this->load->view('configurator');
 	}
-	public function prop_header()
-	{
-		$this->load->view('prop_header');
-	}
-	public function prop_subheader()
-	{
-		$this->load->view('prop_subheader');
-	}
 	public function check_configurator()
 	{
 		$this->load->library('form_validation');
@@ -49,14 +41,6 @@ class Module extends CI_Controller {
 		else 
 		{
 			$module_name = $this->input->post('modules_name');
-			/* $this->load->helper('cookie');
-			$cookie = array(
-				'name'   => 'modulename',
-				'value'  => $module_name,
-				);
-
-			$this->input->set_cookie($cookie); 
-			*/
 			echo json_encode(array('st'=>1,'modules_name'=>$module_name));
 		}
 	}

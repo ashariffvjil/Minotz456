@@ -1,10 +1,4 @@
-<?php 
-//echo "<pre>";
-//print_r($_REQUEST);
-//echo "</pre>";
 
-
-?>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="<?php echo base_url() ?>js/jquery-ui.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/textbox.js"></script>
@@ -14,17 +8,8 @@
  <script type="text/javascript" src="<?php echo base_url() ?>themes/minotz/css/jquery.timepicker.js"></script>
   <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>themes/minotz/css/jquery.timepicker.css" />
   <script src="<?php echo base_url() ?>js/jquery.fileupload.js"></script>
-<!-------- color picker
-	<link rel="Stylesheet" type="text/css" href="<?php echo base_url() ?>js/jpicker/css/jpicker-1.1.6.min.css" />
-	<link rel="Stylesheet" type="text/css" href="<?php echo base_url() ?>js/jpicker/jPicker.css" />
-	<script src="<?php echo base_url() ?>js/jpicker/jquery-1.4.4.min.js" type="text/javascript"></script>
-	<script src="<?php echo base_url() ?>js/jpicker/jpicker-1.1.6.min.js" type="text/javascript"></script> ---------->
-<!--------End color picker ---------->
-<style>
-@media screen {
-	.page_break	{ height:10px; background:url(page-break.gif) 0 center repeat-x; border-top:1px dotted #999; margin-bottom:13px; }
-}	
-</style>
+
+
 <script>
 $(function () {
 $("#properties").css('display',"none");
@@ -324,188 +309,75 @@ $("#properties").css('display',"none");
 }
 </script>
 <?php 
-//print_r($_COOKIE['modulename']);
 
-$module_name='FORM';//$_REQUEST['data'];
-//var_dump($this->input->cookie('modulename'));
-//echo '----'. $cookieData = $this->input->get_cookie("modulename");
  ?>
 <div id="container">
 	<h1>Configurator</h1>
 
 	<div id="body">
-	 <?php echo form_open('module/save_module', array('id'=>'frm','name'=>'frm')); ?>
+	 <?php //echo form_open('module/save_module', array('id'=>'frm','name'=>'frm')); ?>
 		<div class="row">
 		<div id="validation-error" ></div>
-		<!---------- Start the Tools panel-------------->
-			<div class="col-sm-2" style="width:14.6667%;" >
+		<!---------- Start the Modules list panel-------------->
+			<div class="col-lg-4">
 				<div class="panel panel-success">
-					<div class="panel-heading"> Tools </div>
-					<div class="panel-tool">
-						<ul>
-							<li>Header</li>
-							<li>Subheader</li>
-							<li>Text</li>
-							<li>Number</li>
-							<li>Check box</li>
-							<li>Radio button</li>
-							<li>Dropdown list</li>
-							<li>Label</li>
-							<li>Page break</li>
-							<li>Line</li>
-							<li>Sketch</li>
-							<li>Textarea</li>
-							<li>Date</li>
-							<li>Time</li>
-							<li>Image</li>
-						</ul>
+					<div class="panel-heading"> My Modules </div>
+					<div class="panel-body">
+						<table width='100%'>
+							<colgroup>
+								<col width='10%'/>
+								<col width='70%'/>
+								<col width='10%'/>
+								<col width='10%'/>
+							</colgroup>
+						<?php
+							foreach($modules as $data):?>
+							<tr><td><?php echo $data->modules_id?></td><td> <?php echo $data->module_name?></td>
+								<td><img src='<?php echo base_url() ?>Images/edit.jpg' width="20" height="20"></td>
+								<td></td>
+							</tr>
+							<?php endforeach;?>
+						</table>
+						<button  type="submit"class="btn btn-lg btn-primary btn-block">Create New Module</button>
 					</div>
 					
 				</div>
 			</div>
-			<!----------  Create the form-------------->
-			<div class="col-lg-8" style="width:64.2%">
+			<!----------  logx list-------------->
+			<div class="col-lg-4">
 				<div class="panel panel-primary" >
-					<div class="panel-heading"> <?php echo strtoupper($module_name) ?><input type='hidden' name='hid_modulename' value=<?php echo strtoupper($module_name) ?>> </div>
-					<div class="panel-body1" id="frmdiv">
+					<div class="panel-heading"> My Logx </div>
+					<div class="panel-body">
+					<table width='100%'>
+							<colgroup>
+								<col width='10%'/>
+								<col width='70%'/>
+								<col width='10%'/>
+								<col width='10%'/>
+							</colgroup>
+						<?php
+							foreach($logx as $data):?>
+							<tr><td><?php echo $data->logx_id?></td><td> <?php echo $data->name?></td>
+								<td><img src='<?php echo base_url() ?>Images/edit.jpg' width="20" height="20"></td>
+								<td></td>
+							</tr>
+							<?php endforeach;?>
+						</table>
+					<button  type="submit"class="btn btn-lg btn-primary btn-block">Create New Logx</button>
 					</div>
 				</div>
 			</div>
 			<!---------- Start the Properties panel-------------->
-			<div class="col-lg-2" style="width:20.6667%">
+			<div class="col-lg-4">
 				<div class="panel panel-info">
-					<div class="panel-heading"> Properties  <input type="button" name="btn_del" id="id_del" value="Delete" onclick="cntrl_deleted('id_cid')"></div>
-					<div class="panel-properties">
-						<div id="properties">
-							<table width=100%  >
-								<tr>
-									<td>Type</td>
-									<td id='tdid_type'></td>
-								</tr>
-								<tr id='trid_caption' >
-									<td>Caption</td>
-									<td><input type='text' name='txt_caption' id='id_caption' class='textprop' onchange='setcaption(this,"id_cid")' ></td>
-								</tr>
-								<tr>
-									<td>Hide</td>
-									<td><div class="onoffswitch">
-											<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" onclick='gethidestatus(this,"id_cid")' id="myonoffswitch" checked>
-											<label class="onoffswitch-label" for="myonoffswitch">
-											<span class="onoffswitch-inner"></span>
-											<span class="onoffswitch-switch"></span>
-											</label>
-										</div>
-									</td>
-								</tr>
-								<tr id='trid_name' >
-									<td>Name</td>
-									<td><input type='text' name='txt_fname' id='id_fname' class='textprop'></td>
-								</tr>
-								<tr><td id='lblid'>ID:</td><td id='id_cid'></td></tr>
-								<tr id='trid_minlength'>
-									<td>Min Length</td>
-									<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_minlength' id='id_minlength' onkeypress='return onlynumbers(event)' maxlength=3 class='textprop' onchange='return setlengths("id_minlength","id_maxlength","id_cid")'></td>
-								</tr>
-								<tr id='trid_maxlength'>
-									<td>Max Length</td>
-									<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_maxlength' id='id_maxlength' onkeypress='return onlynumbers(event)' maxlength=3 class='textprop' onchange='return setlengths("id_minlength","id_maxlength","id_cid")'></td>
-								</tr>
-								<tr id='trid_multiline'>
-									<td>Multi-line</td>
-									<td><div class="onoffswitch">
-											<input type="checkbox" name="onoff_multiline" class="onoffswitch-checkbox" onclick='getmultiline_status(this,"id_cid")'  id="id_onoff_multiline" checked>
-											<label class="onoffswitch-label" for="id_onoff_multiline">
-											<span class="onoffswitch-inner"></span>
-											<span class="onoffswitch-switch"></span>
-											</label>
-										</div>
-									</td>
-								</tr>
-								<tr id='trid_required'>
-									<td>Required</td>
-									<td><div class="onoffswitch">
-											<input type="checkbox" name="onoff_required" class="onoffswitch-checkbox" onclick='getrequired(this,"id_cid")'  id="id_onoff_required" checked>
-											<label class="onoffswitch-label" for="id_onoff_required">
-											<span class="onoffswitch-inner"></span>
-											<span class="onoffswitch-switch"></span>
-											</label>
-										</div>
-									</td>
-								</tr>
-								<tr id='trid_leftpos' >
-									<td>Left-position</td>
-									<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_lposition' id='id_lposition' onkeypress='return onlynumbers(event)' maxlength=3 class='textprop' onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
-								</tr>
-								<tr id='trid_toppos' >
-									<td>Top-position</td>
-									<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_tposition' id='id_tposition' onkeypress='return onlynumbers(event)' maxlength=3 class='textprop' onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
-								</tr>
-								<tr id='trid_width' >
-									<td>Width</td>
-									<td><input type='text' onDrop="return false;" onPaste="return false;" name='txt_width' id='id_width' class='textprop' onkeypress='return onlynumbers(event)' maxlength=3 onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
-								</tr>
-								<tr id='trid_height' >
-									<td>Height</td>
-									<td><input type='text' onDrop="return false;" onPaste="return false;"  name='txt_height' id='id_height' class='textprop' onkeypress='return onlynumbers(event)' maxlength=3 onchange='setposition("id_tposition","id_lposition","id_cid","id_width","id_height")'></td>
-								</tr>
-								<tr id="trid_fontstyle">
-									<td>Font style</td>
-									<td><a href='#' id='idfnt_regular' onclick='getfontstyle_change("regular","id_cid")' >Regular</a>/<a href='#' id='idfnt_bold' onclick='getfontstyle_change("bold","id_cid")'>Bold</a></td>
-								</tr>
-								<tr id="trid_fontsize">
-									<td>Font size</td>
-									<td><a href='#' onclick='getfontsize_change("large","id_cid")' >Large</a>/
-										<a href='#' onclick='getfontsize_change("medium","id_cid")' >Medium</a>/
-										<a href='#' onclick='getfontsize_change("small","id_cid")' >Small</a></td>
-								</tr> 
-								<tr id="trid_placeholder">
-									<td>Placeholder</td>
-									<td><input type='text' name='txt_placeholder' id='id_placeholder' class='textprop' onchange='setplaceholder(this,"id_cid")' ></td>
-								</tr>
-								<tr id="trid_readonly" >
-									<td>Readonly</td>
-									<td><input type='radio' name='rdo_readonly' id='rdo_readonlyS' value='Yes' onclick='getreadonlystatus(this,"id_cid")' >YES
-										<input type='radio' name='rdo_readonly' id='rdo_readonlyN' value='No' onclick='getreadonlystatus(this,"id_cid")' >NO
-									</td>
-								</tr>
-								<tr id="trid_maxdate">
-									<td>Max Date</td>
-									<td><input type='text' name='txt_maxdate' id='id_maxdate' class='textprop' placeholder='Max date' maxlength='10' readonly='readonly' ></td>
-								</tr>
-								<tr id="trid_mintime">
-									<td>Min Time</td>
-									<td><input type='text' name='txt_mintime_hh' id='id_mintime_hh' style='width:30px' placeholder='HH' maxlength=2 onchange='setmin_maxtimes("id_mintime_hh","id_mintime_mm","id_maxtime_hh","id_maxtime_mm","id_cid")' >:
-										<input type='text' name='txt_mintime_mm' id='id_mintime_mm' style='width:30px' placeholder='MM' maxlength=2 onchange='setmin_maxtimes("id_mintime_hh","id_mintime_mm","id_maxtime_hh","id_maxtime_mm","id_cid")' >
-									</td>
-								</tr>
-								<tr id="trid_maxtime">
-									<td>Max Time</td>
-									<td><input type='text' name='txt_maxtime_hh' id='id_maxtime_hh' style='width:30px' placeholder='HH' maxlength=2  onchange='setmin_maxtimes("id_mintime_hh","id_mintime_mm","id_maxtime_hh","id_maxtime_mm","id_cid")' >:
-										<input type='text' name='txt_maxtime_mm' id='id_maxtime_mm' style='width:30px' placeholder='MM' maxlength=2  onchange='setmin_maxtimes("id_mintime_hh","id_mintime_mm","id_maxtime_hh","id_maxtime_mm","id_cid")' >
-									</td>
-								</tr>
-								<tr id="trid_image">
-									<td>Image</td>
-									<td>
-										<input type='file' name='txt_image' id='id_file' >
-										<!--<input type='submit' name='btnsubmit' value='Upload'>
-										<input id="id_file" class="upload-image" onchange="changeImage()" type="file"    name="avatar" accept="image/jpeg, image/png">
-									
-										<div id="files" class="files"></div>-->
-									</td>
-								</tr>
-								<tr id="trid_entries">
-									<td>Entries</td>
-									<td><textarea name='txt_entries' id='id_entries' class='textprop' onchange='setaddoptions(this,"id_cid")' ></textarea></td>
-								</tr>
-							</table>
-						</div>
+					<div class="panel-heading"> Preview Logx  </div>
+					<div class="panel-body">
+						
+							
+						
 					</div>
 				</div>
 			</div>
-			<center>
-			<input type="submit" value='Create' name="btn_create" id="id_btncreate" onclick="getvalues('frmdiv')"></center>
-			<input type="text" name="txt_description" id="id_description" ><div id='val'></div>
 		</div>
 	</div>
 

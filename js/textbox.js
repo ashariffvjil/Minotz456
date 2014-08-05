@@ -18,8 +18,7 @@ function gettextbox_properties(obj,type)
 	var placeholder_val=$('#'+id).attr('placeholder'); 
 	//element.getAttribute(attributeName);
 	var maxdate=document.getElementById(id).getAttribute('maxdate');
-	var mintime=document.getElementById(id).getAttribute('mintime');
-	var maxtime=document.getElementById(id).getAttribute('maxtime');
+	
 	//alert(maxdate);
 	/*$('#trid_leftpos').hide();
 	$('#trid_toppos').hide();
@@ -197,14 +196,22 @@ function gettextbox_properties(obj,type)
 		$('#trid_mintime').show();
 		$('#trid_maxtime').show();
 		$('#trid_placeholder').show();
-		var min_hh=mintime.substr(0,2);
-		var min_mm=mintime.substr(3,2);
-		var max_hh=maxtime.substr(0,2);
-		var max_mm=maxtime.substr(3,2);
-		$('#id_mintime_hh').val(min_hh);
-		$('#id_mintime_mm').val(min_mm);
-		$('#id_maxtime_hh').val(max_hh);
-		$('#id_maxtime_mm').val(max_mm);
+		$('#id_placeholder').val(placeholder_val);  
+		
+		var maxtime=document.getElementById(id).getAttribute('maxtime');
+		var mintime=document.getElementById(id).getAttribute('mintime');
+		if(maxtime!='' && maxtime!= null )
+		{
+			//alert(maxtime);
+			var min_hh=mintime.substr(0,2);
+			var min_mm=mintime.substr(3,2);
+			var max_hh=maxtime.substr(0,2);
+			var max_mm=maxtime.substr(3,2);
+			$('#id_mintime_hh').val(min_hh);
+			$('#id_mintime_mm').val(min_mm);
+			$('#id_maxtime_hh').val(max_hh);
+			$('#id_maxtime_mm').val(max_mm);
+		} 
 	}
 	else if(type=='Image')
 	{

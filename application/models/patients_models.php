@@ -22,7 +22,7 @@ class patients_models extends CI_Model
 	}
 	function getlogxs()
 	{
-		 $this->db->reconnect();
+		$this->db->reconnect();
 		$query = $this->db->query('call getlogx()');
 	    return $query->result();
 	}

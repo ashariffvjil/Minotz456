@@ -19,8 +19,14 @@ class Logx extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('logx');
+		$data['results']=$this->logxmodules->getlogxs();
+		$this->load->view('logx_list',$data);
+		//
     }
+	public function newlogx()
+	{
+		$this->load->view('logx');
+	}
 	public function save_logx()
 	{
 		$this->load->library('form_validation');
@@ -32,17 +38,21 @@ class Logx extends CI_Controller {
 		else 
 		{
 			$logx_name = $this->input->post('logx_name');
-			$result=$this->logxmodules->logx($logx_name);
+			$user=$this->session->userdata('user');
+			//$userid=$user['userid'];
+			$userid='3';
+			$result=$this->logxmodules->logx($logx_name,$userid);
 			if($result) 
 			{
 			echo json_encode($result);
 			}
-		
 		}
-	
-	
 	}
-  
+	public function logx_edit($logxid)
+	{
+		//$data['results']=$this->logxmodules->getmapped_madules($logxid);
+		//$this->load->view('logx_edit',$data);
+	}
  	
 
  	
