@@ -25,49 +25,6 @@
 	.page_break	{ height:10px; background:url(page-break.gif) 0 center repeat-x; border-top:1px dotted #999; margin-bottom:13px; }
 }	
 </style>
-<script type="text/javascript">
-	//Json function
-	function json_encode(e){var t,n=this.window.JSON;try{if(typeof n==="object"&&typeof n.stringify==="function"){t=n.stringify(e);if(t===undefined){throw new SyntaxError("json_encode")}return t}var r=e;var i=function(e){var t=/[\\\"\u0000-\u001f\u007f-\u009f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;var n={"\b":"\\b","	":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"};t.lastIndex=0;return t.test(e)?'"'+e.replace(t,function(e){var t=n[e];return typeof t==="string"?t:"\\u"+("0000"+e.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+e+'"'};var s=function(e,t){var n="";var r="    ";var o=0;var u="";var a="";var f=0;var l=n;var c=[];var h=t[e];if(h&&typeof h==="object"&&typeof h.toJSON==="function"){h=h.toJSON(e)}switch(typeof h){case"string":return i(h);case"number":return isFinite(h)?String(h):"null";case"boolean":case"null":return String(h);case"object":if(!h){return"null"}if(this.PHPJS_Resource&&h instanceof this.PHPJS_Resource||window.PHPJS_Resource&&h instanceof window.PHPJS_Resource){throw new SyntaxError("json_encode")}n+=r;c=[];if(Object.prototype.toString.apply(h)==="[object Array]"){f=h.length;for(o=0;o<f;o+=1){c[o]=s(o,h)||"null"}a=c.length===0?"[]":n?"[\n"+n+c.join(",\n"+n)+"\n"+l+"]":"["+c.join(",")+"]";n=l;return a}for(u in h){if(Object.hasOwnProperty.call(h,u)){a=s(u,h);if(a){c.push(i(u)+(n?": ":":")+a)}}}a=c.length===0?"{}":n?"{\n"+n+c.join(",\n"+n)+"\n"+l+"}":"{"+c.join(",")+"}";n=l;return a;case"undefined":case"function":default:throw new SyntaxError("json_encode")}};return s("",{"":r})}catch(o){if(!(o instanceof SyntaxError)){throw new Error("Unexpected error type in json_encode()")}this.php_js=this.php_js||{};this.php_js.last_error_json=4;return null}}
-	//STORING A JSON  INTO A HIDDEN FIELD
-	function getvalues(divid)
-	{
-		var ele = document.getElementById(divid).children;
-		var arr_elements = new Array();
-		var total_elements = fillArray(ele,arr_elements);
-		if(total_elements!='[]'){
-			document.getElementById('id_description').value = total_elements;
-			document.getElementById('val').innerHTML = total_elements;
-		}
-	}
-	//STORING ALL CONTROLS/ELEMENTS ATTRIBUTES IN A JSON
-	function fillArray(e1,a1)
-	{
-		for(var i =0;i<e1.length;i++)
-		{
-			if(e1[i].id.indexOf('frmdiv') != 0)
-			var leftposition = parseInt(($('#'+e1[i].id).offset().left) -($('#frmdiv').offset().left));
-			var topposition =parseInt(($('#'+e1[i].id).offset().top) - ($('#frmdiv').offset().top));
-			var element_width=document.getElementById(e1[i].id).offsetWidth;
-			var element_height=document.getElementById(e1[i].id).offsetHeight;
-			var placeholder=$('#'+e1[i].id).attr('placeholder');
-			var readonly_status=$('#'+e1[i].id).attr('readonly');
-			var required_status=$('#'+e1[i].id).attr('required');
-			
-			var maxlength=$('#'+e1[i].id).attr('maxlength');
-			var minlength=$('#'+e1[i].id).attr('minlength');
-			//var maxdate=$('#'+e1[i].id).attr('minlength');
-			a1.push({'id' : e1[i].id,'type' : e1[i].type, 'name':e1[i].name,'value':e1[i].val,'attribute':{'leftposition':leftposition,'topposition':topposition,'element_width':element_width,'element_height':element_height,'placeholder':placeholder,'required':required_status,'readonly':readonly_status,'maxlength':maxlength,'minlength':minlength}});
-		}
-		var resultset=json_encode(a1);
-		return resultset;
-	}
-	//DELETING A PERTICULAR CONTROL/ELEMENT
-	function cntrl_deleted(id_cid)
-	{
-		var active_ctrlid=document.getElementById(id_cid).innerHTML;
-		$('#'+active_ctrlid).remove();
-	}
-</script>
 <script>
 $(function () {
 $("#properties").css('display',"none");
@@ -76,7 +33,7 @@ $("#properties").css('display',"none");
         appendTo: "body",
         helper: "clone"
     });
-	var i=0;var j=0;k=0;l=0;m=0;n=0;p=0;q=0;r=0;s=0;t=0;u=0;v=0;w=0;x=0;
+	var i=0;var j=0;k=0;l=0;m=0;n=0;p=0;q=0;r=0;s=0;t=0;u=0;v=0;w=0;x=0;y=0;
 	var dropPositionY=0;var dropPositionX=0;
     $(".panel-body1").droppable({
         activeClass: "ui-state-default",
@@ -154,7 +111,8 @@ $("#properties").css('display',"none");
 			else if(ui.draggable.text()=='Header'){
 				var $ctrl=$('<label/>').attr({id:'id_header_'+m , name:'header_'+m,onblur:'gettextbox_properties(this,"header")'}).append(lbl);
 				$(this).append($ctrl);
-				//$("#properties").load("prop_header");
+				$('#id_header_'+m).css('font-weight', 'bold');
+				$('#id_header_'+m).css('font-size', '30px');
 				$("#id_header_"+m).draggable({ containment: ".panel-body1",
 				    drag: function(){
 						gettextbox_properties(this,'header');
@@ -179,8 +137,6 @@ $("#properties").css('display',"none");
 			else if(ui.draggable.text()=='Subheader'){
 				var $ctrl=$('<label/>').attr({id:'id_subhead_'+p,name:'Subheader_'+p,onblur:'gettextbox_properties(this,"subheader")'}).append(lbl);
 				$(this).append($ctrl);
-				//$("#properties").html("");
-				//$("#properties").load("prop_subheader");
 				$("#id_subhead_"+p).draggable({ containment: ".panel-body1",
 				    drag: function(){
 						gettextbox_properties(this,'subheader');
@@ -254,7 +210,7 @@ $("#properties").css('display',"none");
 				u++;
 			}
 			else if(ui.draggable.text()=='Date'){
-				var $ctrl = $('<input/>').attr({ type: 'text', id:'id_textdate_'+v, name:'textdate_'+v, placeholder:'Calender'+v,onblur:'gettextbox_properties(this,"Date")'}).addClass("date");
+				var $ctrl = $('<input/>').attr({ type: 'text', id:'id_textdate_'+v, name:'textdate_'+v, placeholder:'dd/mm/yyyy',onblur:'gettextbox_properties(this,"Date")'}).addClass("date");
 				//var $ctrl = $('<input/>').attr({ type: 'date', id:'id_date_'+v, name:'date_'+v, placeholder:'Date'+v,onblur:'gettextbox_properties(this,"Date")'}).addClass("date");
 				$(this).append($ctrl);
 				//$("#id_textdate_"+v).datepicker({ dateFormat: 'dd/mm/yy' });
@@ -275,11 +231,11 @@ $("#properties").css('display',"none");
 				v++;
 			}
 			else if(ui.draggable.text()=='Time'){
-				//var $ctrl = $('<input/>').attr({ type: 'text', id:'id_texttime_'+w, name:'texttime_'+w, placeholder:'time'+w, onblur:'gettextbox_properties(this,"Time")'}).addClass("time");
-				var $ctrl = $('<input/>').attr({ type: 'time', id:'id_time_'+w, name:'time_'+w, placeholder:'time'+w, onblur:'gettextbox_properties(this,"Time")'}).addClass("time");
+				var $ctrl = $('<input/>').attr({ type: 'text', id:'id_texttime_'+w, name:'texttime_'+w, placeholder:'HH:MM', onblur:'gettextbox_properties(this,"Time")'}).addClass("time");
+				//var $ctrl = $('<input/>').attr({ type: 'time', id:'id_time_'+w, name:'time_'+w, placeholder:'time'+w, onblur:'gettextbox_properties(this,"Time")'}).addClass("time");
 				$(this).append($ctrl);
-				//$('#id_texttime_'+w).timepicker({ 'scrollDefault': 'now' });
-				$("#id_time_"+w).draggable({ containment: ".panel-body1",
+				$('#id_texttime_'+w).timepicker({ 'scrollDefault': 'now' });
+				$("#id_texttime_"+w).draggable({ containment: ".panel-body1",
 				    drag: function(){
 						gettextbox_properties(this,'Time');
 					},
@@ -289,7 +245,6 @@ $("#properties").css('display',"none");
 			else if(ui.draggable.text()=='Image'){
 				var $ctrl = $('<img/>').attr({ id:'id_image_'+x, name:'img_image'+x, src:'', onblur:'gettextbox_properties(this,"Image")'}).addClass("image");
 				$(this).append($ctrl);
-				
 				$("#id_image_"+x).draggable({ containment: ".panel-body1",
 				    drag: function(){
 						gettextbox_properties(this,'Image');
@@ -297,10 +252,76 @@ $("#properties").css('display',"none");
 				 scroll: false, cancel: null  });
 				x++;
 			}
-			
+			else if(ui.draggable.text()=='Number')
+			{
+				var $ctrl = $('<input/>').attr({ type: 'text', id:'id_number_'+y, name:'number_'+y, value:'',placeholder:'Numer'+y,onkeypress:'return onlynumbers(event)',onblur:'gettextbox_properties(this,"Number")'}).addClass("number");
+				$(this).append($ctrl);
+				$("#id_number_"+y).draggable({ containment: ".panel-body1",
+				    drag: function(){
+						gettextbox_properties(this,'Number');
+					},
+				scroll: false, cancel: null  });
+				y++;
+			}
         }
     }).sortable();
 });
+</script>
+<script type="text/javascript">
+	//Json function
+	function json_encode(e){var t,n=this.window.JSON;try{if(typeof n==="object"&&typeof n.stringify==="function"){t=n.stringify(e);if(t===undefined){throw new SyntaxError("json_encode")}return t}var r=e;var i=function(e){var t=/[\\\"\u0000-\u001f\u007f-\u009f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;var n={"\b":"\\b","	":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"};t.lastIndex=0;return t.test(e)?'"'+e.replace(t,function(e){var t=n[e];return typeof t==="string"?t:"\\u"+("0000"+e.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+e+'"'};var s=function(e,t){var n="";var r="    ";var o=0;var u="";var a="";var f=0;var l=n;var c=[];var h=t[e];if(h&&typeof h==="object"&&typeof h.toJSON==="function"){h=h.toJSON(e)}switch(typeof h){case"string":return i(h);case"number":return isFinite(h)?String(h):"null";case"boolean":case"null":return String(h);case"object":if(!h){return"null"}if(this.PHPJS_Resource&&h instanceof this.PHPJS_Resource||window.PHPJS_Resource&&h instanceof window.PHPJS_Resource){throw new SyntaxError("json_encode")}n+=r;c=[];if(Object.prototype.toString.apply(h)==="[object Array]"){f=h.length;for(o=0;o<f;o+=1){c[o]=s(o,h)||"null"}a=c.length===0?"[]":n?"[\n"+n+c.join(",\n"+n)+"\n"+l+"]":"["+c.join(",")+"]";n=l;return a}for(u in h){if(Object.hasOwnProperty.call(h,u)){a=s(u,h);if(a){c.push(i(u)+(n?": ":":")+a)}}}a=c.length===0?"{}":n?"{\n"+n+c.join(",\n"+n)+"\n"+l+"}":"{"+c.join(",")+"}";n=l;return a;case"undefined":case"function":default:throw new SyntaxError("json_encode")}};return s("",{"":r})}catch(o){if(!(o instanceof SyntaxError)){throw new Error("Unexpected error type in json_encode()")}this.php_js=this.php_js||{};this.php_js.last_error_json=4;return null}}
+	//STORING A JSON  INTO A HIDDEN FIELD
+	function getvalues(divid)
+	{
+		var ele = document.getElementById(divid).children;
+		var arr_elements = new Array();
+		var total_elements = fillArray(ele,arr_elements);
+		if(total_elements!='[]'){
+			document.getElementById('id_description').value = total_elements;
+			document.getElementById('val').innerHTML = total_elements;
+		}
+	}
+	//STORING ALL CONTROLS/ELEMENTS ATTRIBUTES IN A JSON
+	function fillArray(e1,a1)
+	{
+		for(var i =0;i<e1.length;i++)
+		{
+			if(e1[i].id.indexOf('frmdiv') != 0)
+			var leftposition = parseInt(($('#'+e1[i].id).offset().left) -($('#frmdiv').offset().left));
+			var topposition =parseInt(($('#'+e1[i].id).offset().top) - ($('#frmdiv').offset().top));
+			var element_width=document.getElementById(e1[i].id).offsetWidth;
+			var element_height=document.getElementById(e1[i].id).offsetHeight;
+			var placeholder=$('#'+e1[i].id).attr('placeholder');
+			var readonly_status=$('#'+e1[i].id).attr('readonly');
+			var required_status=$('#'+e1[i].id).attr('required');
+			var caption=$('#'+e1[i].id).text();
+			var curr_con=document.getElementById(e1[i].id);
+			var fontsize=e1[i].style.fontSize;
+			var fontweight= e1[i].style.fontWeight;
+			var visibility= e1[i].style.visibility;
+			var maxdate=$('#'+e1[i].id).attr('maxdate');
+			var maxlength=$('#'+e1[i].id).attr('maxlength');
+			var minlength=$('#'+e1[i].id).attr('minlength');
+			var maxtime=$('#'+e1[i].id).attr('maxtime');
+			var mintime=$('#'+e1[i].id).attr('mintime');
+			var imgsrc=$('#'+e1[i].id).attr('src');
+			a1.push({'id' : e1[i].id,'type' : e1[i].type, 'name':e1[i].name,'value':caption,
+			'attribute':{'leftposition':leftposition,'topposition':topposition,'element_width':element_width,'element_height':element_height,
+			'placeholder':placeholder,'required':required_status,'readonly':readonly_status,'maxlength':maxlength,'minlength':minlength,
+			'font-size': fontsize,'font-weight':fontweight,'visibility': visibility,'maxdate': maxdate,'mintime':mintime,'maxtime':maxtime,'src':imgsrc}});
+		}
+		var resultset=json_encode(a1);
+		return resultset;
+	}
+	//DELETING A PERTICULAR CONTROL/ELEMENT
+	function cntrl_deleted(id_cid)
+	{
+		var active_ctrlid=document.getElementById(id_cid).innerHTML;
+		$('#'+active_ctrlid).remove();
+	}
+	function changeImage() {
+    document.getElementById("newavatar").src = document.getElementById("input-file").value;
+}
 </script>
 <?php 
 //print_r($_COOKIE['modulename']);
@@ -325,6 +346,7 @@ $module_name='FORM';//$_REQUEST['data'];
 							<li>Header</li>
 							<li>Subheader</li>
 							<li>Text</li>
+							<li>Number</li>
 							<li>Check box</li>
 							<li>Radio button</li>
 							<li>Dropdown list</li>
@@ -360,7 +382,7 @@ $module_name='FORM';//$_REQUEST['data'];
 									<td>Type</td>
 									<td id='tdid_type'></td>
 								</tr>
-								<tr>
+								<tr id='trid_caption' >
 									<td>Caption</td>
 									<td><input type='text' name='txt_caption' id='id_caption' class='textprop' onchange='setcaption(this,"id_cid")' ></td>
 								</tr>
@@ -448,24 +470,28 @@ $module_name='FORM';//$_REQUEST['data'];
 								</tr>
 								<tr id="trid_maxdate">
 									<td>Max Date</td>
-									<td><input type='text' name='txt_maxdate' id='id_maxdate' class='textprop' placeholder='Max date' maxlength='10' onchange='setmax_date(this,"id_cid")'></td>
+									<td><input type='text' name='txt_maxdate' id='id_maxdate' class='textprop' placeholder='Max date' maxlength='10' readonly='readonly' ></td>
 								</tr>
 								<tr id="trid_mintime">
 									<td>Min Time</td>
-									<td><input type='text' name='txt_mintime_hh' id='id_mintime_hh' style='width:30px' placeholder='HH' maxlength=2 onchange='setplaceholder12(this,"id_cid")' >:
-										<input type='text' name='txt_mintime_mm' id='id_mintime_mm' style='width:30px' placeholder='MM' maxlength=2 onchange='setplaceholder12(this,"id_cid")' >
+									<td><input type='text' name='txt_mintime_hh' id='id_mintime_hh' style='width:30px' placeholder='HH' maxlength=2 onchange='setmin_maxtimes("id_mintime_hh","id_mintime_mm","id_maxtime_hh","id_maxtime_mm","id_cid")' >:
+										<input type='text' name='txt_mintime_mm' id='id_mintime_mm' style='width:30px' placeholder='MM' maxlength=2 onchange='setmin_maxtimes("id_mintime_hh","id_mintime_mm","id_maxtime_hh","id_maxtime_mm","id_cid")' >
 									</td>
 								</tr>
 								<tr id="trid_maxtime">
 									<td>Max Time</td>
-									<td><input type='text' name='txt_maxtime_hh' id='id_maxtime_hh' style='width:30px' placeholder='HH' maxlength=2  onchange='setplaceholder(this,"id_cid")' >:
-										<input type='text' name='txt_maxtime_mm' id='id_maxtime_mm' style='width:30px' placeholder='MM' maxlength=2  onchange='setplaceholder(this,"id_cid")' >
+									<td><input type='text' name='txt_maxtime_hh' id='id_maxtime_hh' style='width:30px' placeholder='HH' maxlength=2  onchange='setmin_maxtimes("id_mintime_hh","id_mintime_mm","id_maxtime_hh","id_maxtime_mm","id_cid")' >:
+										<input type='text' name='txt_maxtime_mm' id='id_maxtime_mm' style='width:30px' placeholder='MM' maxlength=2  onchange='setmin_maxtimes("id_mintime_hh","id_mintime_mm","id_maxtime_hh","id_maxtime_mm","id_cid")' >
 									</td>
 								</tr>
 								<tr id="trid_image">
 									<td>Image</td>
-									<td><input type='file' name='txt_image' id='fileupload' >
-										<div id="files" class="files"></div>
+									<td>
+										<input type='file' name='txt_image' id='id_file' >
+										<!--<input type='submit' name='btnsubmit' value='Upload'>
+										<input id="id_file" class="upload-image" onchange="changeImage()" type="file"    name="avatar" accept="image/jpeg, image/png">
+									
+										<div id="files" class="files"></div>-->
 									</td>
 								</tr>
 								<tr id="trid_entries">
@@ -487,6 +513,7 @@ $module_name='FORM';//$_REQUEST['data'];
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
+	
 	$('#frm').submit(function(){
 		$.post($('#frm').attr('action'), $('#frm').serialize(), function( data ) {
 			if(data.st == 0)
@@ -504,6 +531,10 @@ $(document).ready(function() {
 $("#id_maxdate").datepicker({
         minDate: 0,
         onSelect: function(theDate) {
+			var act_id=document.getElementById('id_cid').innerHTML;
+			var cntrlid=document.getElementById(act_id);
+			cntrlid.setAttribute('maxdate', theDate);
+			
             $("#dataEnd").datepicker('option', 'mindate', new Date());
         },
         beforeShow: function() {
@@ -511,7 +542,16 @@ $("#id_maxdate").datepicker({
         },
         dateFormat:'dd/mm/yy'
     });
+$('#id_file').change( function(event) {
+	var act_id=document.getElementById('id_cid').innerHTML;
+	var cntrlid=document.getElementById(act_id);
+	var tmppath = URL.createObjectURL(event.target.files[0]);
+    $("#"+act_id).fadeIn("fast").attr('src',URL.createObjectURL(event.target.files[0]));
+    
 });
+
+});
+
 $(function () {
     'use strict';
     // Change this to the location of your server-side upload handler:

@@ -16,7 +16,11 @@ function gettextbox_properties(obj,type)
 	var ele_height = document.getElementById(id).offsetHeight;
 	var caption=$('#'+id).html();
 	var placeholder_val=$('#'+id).attr('placeholder'); 
-	
+	//element.getAttribute(attributeName);
+	var maxdate=document.getElementById(id).getAttribute('maxdate');
+	var mintime=document.getElementById(id).getAttribute('mintime');
+	var maxtime=document.getElementById(id).getAttribute('maxtime');
+	//alert(maxdate);
 	/*$('#trid_leftpos').hide();
 	$('#trid_toppos').hide();
 	$('#trid_width').hide();
@@ -39,7 +43,6 @@ function gettextbox_properties(obj,type)
 	
 	if(type=='header')
 	{
-
 		$('#tdid_type').text(type);
 		$('#id_tposition').val(parseInt(top_pos));
 		$('#id_lposition').val(parseInt(left_pos));
@@ -61,6 +64,19 @@ function gettextbox_properties(obj,type)
 		$('#trid_fontsize').show();
 		
 	}
+	else if(type=='label')
+	{
+		$('#tdid_type').text(type);
+		$('#id_tposition').val(parseInt(top_pos));
+		$('#id_lposition').val(parseInt(left_pos));
+		$('#id_width').val(ele_width);
+		$('#id_height').val(ele_height);
+		$('#id_cid').text(id);
+		$('#id_caption').val(caption);
+		//$('#trid_fontstyle').show();
+		//$('#trid_fontsize').show();
+		
+	}
 	else if(type=='text')
 	{
 		$('#tdid_type').text(type);
@@ -75,6 +91,22 @@ function gettextbox_properties(obj,type)
 		$('#trid_readonly').show();
 		$('#trid_required').show();
 		
+		$('#trid_maxlength').show();
+		$('#trid_minlength').show();
+	}
+	else if(type=='Number')
+	{
+		$('#tdid_type').text(type);
+		$('#id_tposition').val(parseInt(top_pos));
+		$('#id_lposition').val(parseInt(left_pos));
+		$('#id_width').val(ele_width);
+		$('#id_height').val(ele_height);
+		$('#id_cid').text(id);
+		$('#id_placeholder').val(placeholder_val);  
+		$('#id_caption').val(caption);
+		$('#trid_placeholder').show();
+		$('#trid_readonly').show();
+		$('#trid_required').show();
 		$('#trid_maxlength').show();
 		$('#trid_minlength').show();
 	}
@@ -150,6 +182,7 @@ function gettextbox_properties(obj,type)
 		$('#trid_required').show();
 		$('#trid_placeholder').show();
 		$('#trid_maxdate').show();
+		$('#id_maxdate').val(maxdate);
 	}
 	else if(type=='Time')
 	{
@@ -164,6 +197,14 @@ function gettextbox_properties(obj,type)
 		$('#trid_mintime').show();
 		$('#trid_maxtime').show();
 		$('#trid_placeholder').show();
+		var min_hh=mintime.substr(0,2);
+		var min_mm=mintime.substr(3,2);
+		var max_hh=maxtime.substr(0,2);
+		var max_mm=maxtime.substr(3,2);
+		$('#id_mintime_hh').val(min_hh);
+		$('#id_mintime_mm').val(min_mm);
+		$('#id_maxtime_hh').val(max_hh);
+		$('#id_maxtime_mm').val(max_mm);
 	}
 	else if(type=='Image')
 	{
@@ -178,7 +219,7 @@ function gettextbox_properties(obj,type)
 		$('#trid_image').show();
 		
 	}
-	else if(type=='Line')
+	else if(type=='line')
 	{
 		$('#tdid_type').text(type);
 		$('#id_tposition').val(parseInt(top_pos));
@@ -186,7 +227,7 @@ function gettextbox_properties(obj,type)
 		$('#id_width').val(ele_width);
 		$('#id_height').val(ele_height);
 		$('#id_cid').text(id);
-		
+		$('#trid_caption').hide();
 		
 		
 	}
@@ -315,16 +356,6 @@ function setlengths(minlen,maxlen,id_cid)
 		cntrlid.setAttribute('maxlength', max_len);
 	}
 }
-function getmultiline_status(obj,id_cid)
-{
-	var act_id=document.getElementById(id_cid).innerHTML;
-	if(obj.checked==true)
-	{
-		$('#'+act_id).css('multiline', 'true');
-	}else{
-		$('#'+act_id).css('multiline', 'false');
-	}
-} 
 function getrequired(obj,id_cid)
 {
 	var act_id=document.getElementById(id_cid).innerHTML;
@@ -335,26 +366,30 @@ function getrequired(obj,id_cid)
 		$('#'+act_id).removeAttr('required');
 	}
 }
-function setmax_date(obj,id_cid)
+function setmin_maxtimes(min_hh,min_mm,max_hh,max_mm,id_cid)
 {
 	var act_id=document.getElementById(id_cid).innerHTML;
-	var val=obj.value;
-	//$('#'+act_id).setAttribute('maxDate', val);
-	var date=$.datepicker.formatDate('dd/mm/yy', new Date())
-	$("#"+act_id).datepicker({ 
-					minDate: date, 
-					maxDate: $.datepicker.formatDate('mm/dd/yy',new Date(val)), 
-					dateFormat: "dd/mm/yy", 
-					//defaultDate: "+1w", 
-					changeMonth: true, 
-					numberOfMonths: 1 
-				}); 
-
+	var cntrlid=document.getElementById(act_id);
+	var mintime=(parseInt(document.getElementById(min_hh).value)*60)+parseInt(document.getElementById(min_mm).value);
+	var maxtime=(parseInt(document.getElementById(max_hh).value)*60)+parseInt(document.getElementById(max_mm).value);
+	//alert(mintime+'----afaasf----'+maxtime);
+	if(mintime>maxtime)
+	{
+		alert('Max Time should be greater than Min Time');
+		document.getElementById(max_hh).value='';
+		document.getElementById(max_mm).value='';
+		document.getElementById(max_hh).focus();
+		return false;
+	}
+	var min_time=document.getElementById(min_hh).value+':'+document.getElementById(min_mm).value;
+	var max_time=document.getElementById(max_hh).value+':'+document.getElementById(max_mm).value;
+	cntrlid.setAttribute('mintime', min_time);
+	cntrlid.setAttribute('maxtime', max_time);
+	
 }
 function getuploadimg(obj,id_cid)
 {
 	 var url = './application/views/minotz/uploads/';
-	
     $('#fileupload').fileupload({
         url: url,
         dataType: 'json',

@@ -10,12 +10,19 @@
 			 <?php echo form_open('module/newmodule', array('id'=>'frm','name'=>'frm')); ?>
 					<fieldset>
 						<div class="form-group">
+							<table border=1 width=100%>
+								<tr><th>Module-Id</th>
+									<th>Module Name</th>
+									<th>Edit</th>
+									<th>Delete</th>
+								</tr>
 							<?php 
 							//print_r($results);
 							foreach($results as $data):?>
-								<?php echo $data->modules_id?> - <?php echo $data->module_name?><br />
+								<tr><td><?php echo $data->modules_id?></td><td> <?php echo $data->module_name?></td>
+									<td>&nbsp;</td><td></td></tr>
 								<?php endforeach;?>
-						
+							</table>
 						</div>
 						
 						<!-- Change this to a button or input when using this as a form -->
